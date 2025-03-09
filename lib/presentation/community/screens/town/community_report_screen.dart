@@ -83,6 +83,12 @@ class CommunityReportState extends ConsumerState<CommunityReportScreen> {
                           style: DaepiroTextStyle.body_1_m
                               .copyWith(color: DaepiroColorStyle.g_900),
                         ),
+                        SizedBox(height: 4),
+                        Text(
+                          '정확한 메일 주소를 입력하지 않으면, 답변을 받을 수 없어요.',
+                          style: DaepiroTextStyle.body_2_m
+                              .copyWith(color: DaepiroColorStyle.g_200),
+                        ),
                         SizedBox(height: 8),
                         mailWriteWidget(),
                         SizedBox(height: 20)
@@ -234,7 +240,7 @@ class CommunityReportState extends ConsumerState<CommunityReportScreen> {
           contentPadding: EdgeInsets.all(16),
           filled: true,
           fillColor: DaepiroColorStyle.g_50,
-          hintText: 'numberone@domain.com',
+          hintText: 'example@domain.com',
           hintStyle: DaepiroTextStyle.body_1_m
               .copyWith(color: DaepiroColorStyle.g_200),
           border: OutlineInputBorder(

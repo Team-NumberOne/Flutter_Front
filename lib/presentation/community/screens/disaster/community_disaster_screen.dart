@@ -55,10 +55,10 @@ class CommunityDisasterScreen extends ConsumerWidget {
                   Center(child: CircularProgressIndicator())
                 else if (state.disasterCommunityType == 'all' &&
                     state.allDisasterResponse.length == 0)
-                  Center(child: Text('데이터가 없습니다.'))
+                  Center(child: Text('재난상황이 아직 없습니다.'))
                 else if (state.disasterCommunityType != 'all' &&
                     state.receivedDisasterResponse.length == 0)
-                  Center(child: Text('데이터가 없습니다.'))
+                  Center(child: Text('재난상황이 아직 없습니다.'))
                 else
                   ...List.generate(
                     state.disasterCommunityType == 'all'
@@ -413,6 +413,8 @@ class CommunityDisasterScreen extends ConsumerWidget {
                       children: [
                         SvgPicture.asset(
                           'assets/icons/icon_good.svg',
+                          width: 16,
+                          height: 16,
                           colorFilter: ColorFilter.mode(
                               DaepiroColorStyle.g_200, BlendMode.srcIn),
                         ),

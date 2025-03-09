@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:daepiro/presentation/mypage/controller/mypage_viewmodel.dart';
 import 'package:daepiro/presentation/mypage/state/mypage_state.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,6 +27,9 @@ class MyPageDisasterAddressState extends ConsumerState<MypageDisasterAddressSett
   FocusNode nickFocusNode1 = FocusNode();
   FocusNode nickFocusNode2 = FocusNode();
   final ValueNotifier<bool> isValueChangeNotifier = ValueNotifier(false);
+  String firstJuso = '';
+  String secondJuso = '';
+  String homeJuso = '';
 
   @override
   void initState() {
@@ -39,14 +44,17 @@ class MyPageDisasterAddressState extends ConsumerState<MypageDisasterAddressSett
 
       if (state.homeJuso != '') {
         homeController.text = state.homeJuso;
+        homeJuso = state.homeJuso;
       }
       if (state.firstJuso != '') {
         jusoController1.text = state.firstJuso;
         jusoNickController1.text = state.firstJusoNick;
+        firstJuso = state.firstJuso;
       }
       if (state.secondJuso != '') {
         jusoController2.text = state.secondJuso;
         jusoNickController2.text = state.secondJusoNick;
+        secondJuso = state.secondJuso;
       }
     });
   }
@@ -96,7 +104,7 @@ class MyPageDisasterAddressState extends ConsumerState<MypageDisasterAddressSett
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
-                headerWidget(context, state.homeJuso.isNotEmpty),
+                headerWidget(context, (state.homeJuso.isNotEmpty && homeJuso != state.homeJuso) || firstJuso != state.firstJuso || secondJuso != state.secondJuso),
                 if(state.isLoading)
                   const Center(child: CircularProgressIndicator())
                 else
@@ -153,7 +161,7 @@ class MyPageDisasterAddressState extends ConsumerState<MypageDisasterAddressSett
             builder: (context, isChanged, builder) {
               return GestureDetector(
                 onTap: () async {
-                  if(isAvailable && isChanged) {
+                  if(isAvailable || isChanged) {
                     ref.read(myPageProvider.notifier).setJusoNick(jusoNickController1.text, jusoNickController2.text);
                     final isSuccess = await ref.read(myPageProvider.notifier).setAddressList();
                     showSnackbar(context, isSuccess);
@@ -161,7 +169,7 @@ class MyPageDisasterAddressState extends ConsumerState<MypageDisasterAddressSett
                 },
                 child: Text('저장',
                     style: DaepiroTextStyle.body_1_m
-                        .copyWith(color: isAvailable && isChanged ? DaepiroColorStyle.o_500 : DaepiroColorStyle.g_100)),
+                        .copyWith(color: isAvailable || isChanged ? DaepiroColorStyle.o_500 : DaepiroColorStyle.g_100)),
               );
             })
       ],
@@ -314,7 +322,7 @@ class MyPageDisasterAddressState extends ConsumerState<MypageDisasterAddressSett
       TextEditingController jusoNickController1,
       WidgetRef ref,
       String firstJusoState,
-      String userName
+      String userName,
       ) {
     return Container(
       width: double.infinity,
@@ -332,6 +340,11 @@ class MyPageDisasterAddressState extends ConsumerState<MypageDisasterAddressSett
             ref: ref,
             focusNode: nickFocusNode1,
             index: 1,
+            onTapOutside: () {
+              if(jusoNickController1.text.isEmpty) {
+                ref.read(myPageProvider.notifier).controlJusoState(1);
+              }
+            },
           ),
           SizedBox(
             height: 10,
@@ -448,6 +461,11 @@ class MyPageDisasterAddressState extends ConsumerState<MypageDisasterAddressSett
             ref: ref,
             focusNode: nickFocusNode2,
             index: 2,
+            onTapOutside: () {
+              if(jusoNickController2.text.isEmpty) {
+                ref.read(myPageProvider.notifier).controlJusoState(2);
+              }
+            },
           ),
           SizedBox(
             height: 10,
@@ -731,23 +749,29 @@ class MyPageDisasterAddressState extends ConsumerState<MypageDisasterAddressSett
         bottom: 50.0,
         left: 20.0,
         right: 20.0,
-        child: Material(
-          elevation: 8.0,
+        child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
-          color: Colors.black.withOpacity(0.6),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    isSuccess ? '저장되었어요.' : '다시 시도해주세요.',
-                    style: DaepiroTextStyle.body_2_m
-                        .copyWith(color: DaepiroColorStyle.white),
-                  ),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+            child: Material(
+              elevation: 4.0,
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.black.withOpacity(0.6),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        isSuccess ? '저장되었어요.' : '다시 시도해주세요.',
+                        style: DaepiroTextStyle.body_2_m
+                            .copyWith(color: DaepiroColorStyle.white),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),

@@ -117,7 +117,7 @@ class OnboardingThirdState extends ConsumerState<OnboardingThirdScreen> {
                         ref, state.secondJusoState, state.userNickName),
                   if (state.isJuso1Visible)
                     InputLocationAddress1(jusoController1, jusoNickController1,
-                        ref, state.firstJusoState, state.userNickName, state.firstJusoNick),
+                        ref, state.firstJusoState, state.userNickName),
                   InputHomeAddress(homeController, context, ref, state.homeJuso,
                       state.isJuso1Visible, state.isJuso2Visible, state.userNickName)
                 ],
@@ -303,7 +303,6 @@ class OnboardingThirdState extends ConsumerState<OnboardingThirdScreen> {
     WidgetRef ref,
     String firstJusoState,
       String userNickName,
-      String jusoNick
 
   ) {
     return Container(

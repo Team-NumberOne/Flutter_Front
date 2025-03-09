@@ -113,7 +113,7 @@ class HorizonPhotoWidget extends ConsumerWidget {
               color: DaepiroColorStyle.white,
                 boxShadow: [
                   BoxShadow(
-                      color: Colors.black.withOpacity(0.6),
+                      color: Colors.black.withOpacity(0.15),
                       blurRadius: 4.0,
                       spreadRadius: 0.0,
                       offset: const Offset(0, 0)

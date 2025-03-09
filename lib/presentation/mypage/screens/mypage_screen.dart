@@ -202,14 +202,29 @@ class MypageScreen extends ConsumerWidget {
             width: 72,
             height: 72,
             clipBehavior: Clip.antiAlias,
-            decoration: const BoxDecoration(shape: BoxShape.circle),
-            child: Image.network(
-              profileImgUrl,
-              errorBuilder: (BuildContext context, Object exception,
-                  StackTrace? stackTrace) {
-                return CircularProgressIndicator();
-              },
-              fit: BoxFit.fill,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: DaepiroColorStyle.g_50,
+                border: Border.all(width: 2, color:DaepiroColorStyle.g_50)
+            ),
+            child: ClipOval(
+              child: Image.network(
+                profileImgUrl,
+                fit: BoxFit.cover,
+                width: 72,
+                height: 72,
+                loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+                errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              ),
             ),
           ),
           SizedBox(height: 8),

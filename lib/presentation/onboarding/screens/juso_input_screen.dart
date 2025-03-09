@@ -43,6 +43,14 @@ class JusoInputState extends ConsumerState<JusoInputScreen> {
     });
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    jusoController.dispose();
+    scrollController.dispose();
+    focusNode.dispose();
+  }
+
   Future<void> loadMoreJuso() async {
     if (!isLoading) {
       setState(() {

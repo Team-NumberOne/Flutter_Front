@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -53,21 +55,23 @@ class SettingFCM {
       print('알림 notification: $title');
       print('알림 notification: $body');
 
-      _localNotifications.show(
-        notification.hashCode,
-        title,
-        body,
-        const NotificationDetails(
-          android: AndroidNotificationDetails(
-            'high_importance_channel',
-            'High Importance Notifications',
-            importance: Importance.max,
-            priority: Priority.high,
-            icon: '@mipmap/ic_launcher',
+      if(Platform.isAndroid) {
+        _localNotifications.show(
+          notification.hashCode,
+          title,
+          body,
+          const NotificationDetails(
+            android: AndroidNotificationDetails(
+              'high_importance_channel',
+              'High Importance Notifications',
+              importance: Importance.max,
+              priority: Priority.high,
+              icon: '@mipmap/ic_launcher',
+            ),
+            iOS: DarwinNotificationDetails(sound: 'default'),
           ),
-          iOS: DarwinNotificationDetails(sound: 'default'),
-        ),
-      );
+        );
+      }
         });
   }
 }

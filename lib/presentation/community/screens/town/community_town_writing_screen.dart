@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:daepiro/presentation/community/controller/community_town_view_model.dart';
+import 'package:daepiro/presentation/community/screens/town/gallery_view_screen.dart';
 import 'package:daepiro/presentation/community/screens/town/horizon_photo_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -125,13 +128,13 @@ class CommunityTownWritingState
                             height: 20,
                           ),
                           photoWidget(),
-                          SizedBox(height: 20)
+                          SizedBox(height: 20),
+                          Visibility(
+                              visible: !widget.isEdit,
+                              child: locationCheckWidget(state.isVisible)),
                         ],
                       ),
                     )),
-                Visibility(
-                    visible: !widget.isEdit,
-                    child: locationCheckWidget(state.isVisible)),
                 SizedBox(height: 16),
               ],
             ),
@@ -148,11 +151,13 @@ class CommunityTownWritingState
         if (didPop && !widget.isEdit) {
           await ref.read(communityTownProvider.notifier).loadContent();
           ref.read(communityTownProvider.notifier).clearWritingState();
+          ref.read(selectedImagesProvider.notifier).clearImages();
         } else if (didPop && widget.isEdit) {
           await ref
               .read(communityTownProvider.notifier)
               .getContentDetail(widget.contentDetail!.id);
           ref.read(communityTownProvider.notifier).clearWritingState();
+          ref.read(selectedImagesProvider.notifier).clearImages();
         }
       },
       child: Container(
@@ -187,7 +192,7 @@ class CommunityTownWritingState
                           .setArticle(titleTextController.text,
                               contentTextController.text);
                       showSnackbar(context, '잠시만 기다려주세요.');
-                      Future.delayed(const Duration(milliseconds: 400), () {
+                      Future.delayed(const Duration(milliseconds: 500), () {
                         GoRouter.of(context).pop();
                         showSnackbar(context, isSuccess ? '게시글 작성이 완료되었습니다.' : '잠시 후 다시 시도해주세요.');
                       });
@@ -677,23 +682,32 @@ class CommunityTownWritingState
         bottom: 50.0,
         left: 20.0,
         right: 20.0,
-        child: Material(
-          elevation: 8.0,
+        child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
-          color: Colors.black.withOpacity(0.6),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    text,
-                    style: DaepiroTextStyle.body_2_m
-                        .copyWith(color: DaepiroColorStyle.white),
-                  ),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+            child: Material(
+              elevation: 4.0,
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.black.withOpacity(0.6),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: DefaultTextStyle(
+                        style: DaepiroTextStyle.body_2_m,
+                        child: Text(
+                          textAlign: TextAlign.center,
+                          text,
+                          style: DaepiroTextStyle.body_2_m
+                              .copyWith(color: DaepiroColorStyle.white),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
@@ -715,23 +729,29 @@ class CommunityTownWritingState
         bottom: 50.0,
         left: 20.0,
         right: 20.0,
-        child: Material(
-          elevation: 8.0,
+        child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
-          color: Colors.black.withOpacity(0.6),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    content,
-                    style: DaepiroTextStyle.body_2_m
-                        .copyWith(color: DaepiroColorStyle.white),
-                  ),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+            child: Material(
+              elevation: 4.0,
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.black.withOpacity(0.6),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        content,
+                        style: DaepiroTextStyle.body_2_m
+                            .copyWith(color: DaepiroColorStyle.white),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),

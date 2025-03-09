@@ -1,5 +1,6 @@
 import 'package:daepiro/data/model/response/home/disasters_history_response.dart';
 import 'package:daepiro/data/model/response/sponsor/sponsor_list_response.dart';
+import 'package:daepiro/presentation/community/screens/town/community_photo_screen.dart';
 import 'package:daepiro/presentation/home/main/notification_screen.dart';
 import 'package:daepiro/presentation/information/contents/disaster_contents_screen.dart';
 import 'package:daepiro/presentation/information/contents/news_screen.dart';
@@ -133,6 +134,12 @@ final goRouteProvider = Provider((ref) {
             contentDetail: contentDetail,
           );
         },
+      ),
+      GoRoute(
+          path: '/community_photo_screen',
+          builder: (context, state) => CommunityPhotoScreen(
+              fileList: state.extra as List<String>
+          )
       ),
       GoRoute(
           path: '/town_certificate',

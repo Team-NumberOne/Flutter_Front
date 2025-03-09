@@ -237,7 +237,7 @@ class CheerReportState extends ConsumerState<CheerReportScreen> {
           contentPadding: EdgeInsets.all(16),
           filled: true,
           fillColor: DaepiroColorStyle.g_50,
-          hintText: 'numberone@domain.com',
+          hintText: 'example@domain.com',
           hintStyle: DaepiroTextStyle.body_1_m
               .copyWith(color: DaepiroColorStyle.g_200),
           border: OutlineInputBorder(

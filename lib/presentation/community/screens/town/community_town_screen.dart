@@ -82,7 +82,7 @@ class CommunityTownState extends ConsumerState<CommunityTownScreen> {
                           GoRouter.of(context).push('/community_town_detail');
                         }, content, ref, state.townCategory);
                       })
-                      : SizedBox.shrink(),
+                      : Center(child: noDataWidget()),
                   if (state.isDongNaeLoading)
                     Center(
                       child: CircularProgressIndicator(),
@@ -175,126 +175,138 @@ class CommunityTownState extends ConsumerState<CommunityTownScreen> {
   //리스트 아이템 위젯
   Widget listItemWidget(
       VoidCallback event, Content content, WidgetRef ref, String townCategory) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
+    return InkWell(
+      overlayColor: MaterialStateProperty.resolveWith<Color>(
+              (Set<MaterialState> states) {
+            if (states.contains(MaterialState.pressed)) {
+              return DaepiroColorStyle.g_50;
+            }
+            return DaepiroColorStyle.white;
+          }),
       onTap: event,
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 16),
-        child: Container(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 8),
-                Row(
-                  children: [
-                    Visibility(
-                        visible: townCategory == '전체',
+      borderRadius: BorderRadius.all(Radius.circular(8)),
+      child: Ink(
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 16),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(8))
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Visibility(
+                          visible: townCategory == '전체',
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: typeChip(ContentCategory.getByValue(content.category!)),
+                          )),
+                      Visibility(
+                        visible: content.address?.addressId != null,
+                          child: addressChip('${content.address?.eupMyeonDong ?? '00동'}에서 작성한 글')
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 12),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              content.title ?? '',
+                              style: DaepiroTextStyle.body_1_b
+                                  .copyWith(color: DaepiroColorStyle.g_900),
+                            ),
+                            SizedBox(height: 2),
+                            Text(
+                              content.body ?? '',
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              style: DaepiroTextStyle.body_2_m
+                                  .copyWith(color: DaepiroColorStyle.g_500),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Visibility(
+                        visible: content.previewImageUrl != null,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: content.previewImageUrl != null
+                              ? Image.network(
+                                  width: 68,
+                                  height: 68,
+                                  content.previewImageUrl!,
+                                  fit: BoxFit.cover,
+                                )
+                              : SizedBox.shrink(),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Text(
+                        content.authorUser?.nickname ?? '',
+                        style: DaepiroTextStyle.caption
+                            .copyWith(color: DaepiroColorStyle.g_800),
+                      ),
+                      Visibility(
+                        visible: content.authorUser?.isVerified ?? false,
                         child: Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: typeChip(ContentCategory.getByValue(content.category!)),
-                        )),
-                    Visibility(
-                      visible: content.address?.addressId != null,
-                        child: addressChip('${content.address?.eupMyeonDong ?? '00동'}에서 작성한 글')
-                    )
-                  ],
-                ),
-                SizedBox(height: 12),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            content.title ?? '',
-                            style: DaepiroTextStyle.body_1_b
-                                .copyWith(color: DaepiroColorStyle.g_900),
-                          ),
-                          SizedBox(height: 2),
-                          Text(
-                            content.body ?? '',
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            style: DaepiroTextStyle.body_2_m
-                                .copyWith(color: DaepiroColorStyle.g_500),
-                          ),
-                        ],
+                          padding: const EdgeInsets.only(left: 4.0),
+                          child: SvgPicture.asset(
+                              'assets/icons/icon_town_certificate.svg',
+                              width: 16,
+                              height: 16,
+                              colorFilter: ColorFilter.mode(
+                                  DaepiroColorStyle.o_300, BlendMode.srcIn)),
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 10),
-                    Visibility(
-                      visible: content.previewImageUrl != null,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
-                        child: content.previewImageUrl != null
-                            ? Image.network(
-                                width: 68,
-                                height: 68,
-                                content.previewImageUrl!,
-                                fit: BoxFit.fill,
-                              )
-                            : SizedBox.shrink(),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 6.0),
+                        child: Text(
+                            content.lastModifiedAt == content.createdAt!
+                                ? parseRegTime(content.createdAt!)
+                                : parseRegTime(content.lastModifiedAt!),
+                            style: DaepiroTextStyle.caption
+                                .copyWith(color: DaepiroColorStyle.g_300)),
                       ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 12),
-                Row(
-                  children: [
-                    Text(
-                      content.authorUser?.nickname ?? '',
-                      style: DaepiroTextStyle.caption
-                          .copyWith(color: DaepiroColorStyle.g_800),
-                    ),
-                    Visibility(
-                      visible: content.authorUser?.isVerified ?? false,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 4.0),
-                        child: SvgPicture.asset(
-                            'assets/icons/icon_town_certificate.svg',
-                            width: 16,
-                            height: 16,
-                            colorFilter: ColorFilter.mode(
-                                DaepiroColorStyle.o_300, BlendMode.srcIn)),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 6.0),
-                      child: Text(
-                          content.lastModifiedAt == content.createdAt!
-                              ? parseRegTime(content.createdAt!)
-                              : parseRegTime(content.lastModifiedAt!),
+                      Spacer(),
+                      SvgPicture.asset('assets/icons/icon_good.svg',
+                          width: 16,
+                          height: 16,
+                          colorFilter: ColorFilter.mode(
+                              DaepiroColorStyle.g_200, BlendMode.srcIn)),
+                      SizedBox(width: 2),
+                      Text(content.likeCount.toString(),
                           style: DaepiroTextStyle.caption
-                              .copyWith(color: DaepiroColorStyle.g_300)),
-                    ),
-                    Spacer(),
-                    SvgPicture.asset('assets/icons/icon_good.svg',
-                        width: 16,
-                        height: 16,
-                        colorFilter: ColorFilter.mode(
-                            DaepiroColorStyle.g_200, BlendMode.srcIn)),
-                    SizedBox(width: 2),
-                    Text(content.likeCount.toString(),
-                        style: DaepiroTextStyle.caption
-                            .copyWith(color: DaepiroColorStyle.g_200)),
-                    SizedBox(width: 4),
-                    SvgPicture.asset('assets/icons/icon_community.svg',
-                        width: 16,
-                        height: 16,
-                        colorFilter: ColorFilter.mode(
-                            DaepiroColorStyle.g_200, BlendMode.srcIn)),
-                    SizedBox(width: 2),
-                    Text(content.commentCount.toString(),
-                        style: DaepiroTextStyle.caption
-                            .copyWith(color: DaepiroColorStyle.g_200)),
-                  ],
-                )
-              ],
+                              .copyWith(color: DaepiroColorStyle.g_200)),
+                      SizedBox(width: 4),
+                      SvgPicture.asset('assets/icons/icon_community.svg',
+                          width: 16,
+                          height: 16,
+                          colorFilter: ColorFilter.mode(
+                              DaepiroColorStyle.g_200, BlendMode.srcIn)),
+                      SizedBox(width: 2),
+                      Text(content.commentCount.toString(),
+                          style: DaepiroTextStyle.caption
+                              .copyWith(color: DaepiroColorStyle.g_200)),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -333,31 +345,33 @@ class CommunityTownState extends ConsumerState<CommunityTownScreen> {
     );
   }
 
-  // Widget noDataWidget() {
-  //   return Expanded(
-  //       child: Center(
-  //         child: Column(
-  //           mainAxisAlignment: MainAxisAlignment.center,
-  //           crossAxisAlignment: CrossAxisAlignment.center,
-  //           children: [
-  //             SvgPicture.asset('assets/icons/icon_community.svg',
-  //                 width: 48,
-  //                 height: 48,
-  //                 colorFilter:
-  //                 ColorFilter.mode(DaepiroColorStyle.g_75, BlendMode.srcIn)),
-  //             SizedBox(height: 8,),
-  //             Text(
-  //               '아직 작성된 글이 없어요',
-  //               style: DaepiroTextStyle.h6.copyWith(color: DaepiroColorStyle.g_300),
-  //             ),
-  //             SizedBox(height: 4),
-  //             Text(
-  //               '글을 작성하고 이웃과 소통해보세요.',
-  //               style: DaepiroTextStyle.body_2_m.copyWith(color: DaepiroColorStyle.g_300),
-  //             )
-  //           ],
-  //         ),
-  //       )
-  //   );
-  // }
+  Widget noDataWidget() {
+    return Container(
+      width: double.infinity,
+        height: MediaQuery.of(context).size.height/2,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SvgPicture.asset('assets/icons/icon_community.svg',
+                  width: 48,
+                  height: 48,
+                  colorFilter:
+                  ColorFilter.mode(DaepiroColorStyle.g_75, BlendMode.srcIn)),
+              SizedBox(height: 8,),
+              Text(
+                '아직 작성된 글이 없어요',
+                style: DaepiroTextStyle.h6.copyWith(color: DaepiroColorStyle.g_300),
+              ),
+              SizedBox(height: 4),
+              Text(
+                '글을 작성하고 이웃과 소통해보세요.',
+                style: DaepiroTextStyle.body_2_m.copyWith(color: DaepiroColorStyle.g_300),
+              )
+            ],
+          ),
+        )
+    );
+  }
 }

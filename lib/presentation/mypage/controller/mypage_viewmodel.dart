@@ -372,6 +372,24 @@ class MyPageViewModel extends StateNotifier<MyPageState> {
     }
   }
 
+  void controlJusoState(int index) {
+    if(index == 1) {
+      state = state.copyWith(
+        firstJusoNick: '',
+        firstJusoState: '',
+        firstJuso: '',
+        isJuso1Visible: false,
+      );
+    } else {
+      state = state.copyWith(
+        secondJusoNick: '',
+        secondJusoState: '',
+        secondJuso: '',
+        isJuso2Visible: false,
+      );
+    }
+  }
+
   /// 재난 유형 재설정
 
   Future<void> getDisasterType() async {

@@ -248,22 +248,29 @@ class ReplyMenuScreen extends ConsumerWidget {
         bottom: 50.0,
         left: 20.0,
         right: 20.0,
-        child: Material(
-          elevation: 8.0,
+        child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
-          color: Colors.black.withOpacity(0.6),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    '댓글이 삭제되었어요.',
-                    style: DaepiroTextStyle.body_2_m
-                        .copyWith(color: DaepiroColorStyle.white),
-                  ),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+            child: Material(
+              elevation: 4.0,
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.black.withOpacity(0.6),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        '댓글이 삭제되었어요.',
+                        style: DaepiroTextStyle.body_2_m
+                            .copyWith(color: DaepiroColorStyle.white),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),

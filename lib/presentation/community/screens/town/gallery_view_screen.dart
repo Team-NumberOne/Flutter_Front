@@ -45,12 +45,18 @@ class SelectedImagesNotifier extends StateNotifier<List<SelectedImage>> {
         final fileSize = await file.length();
         if(totalSize + fileSize > 10 * 1024 * 1024) {
           failSnackbar(context);
+          print('여기서 사이즈 체크 ${totalSize} && ${totalLength}');
           return;
         }
         totalSize += await file.length();
       }
       state = [...state, image];
     }
+  }
+
+  void clearImages() {
+    state = [];
+    totalSize = 0;
   }
 
   bool _addedImageCheck(SelectedImage image, SelectedImage compareImage) {
@@ -65,30 +71,36 @@ class SelectedImagesNotifier extends StateNotifier<List<SelectedImage>> {
         bottom: 50.0,
         left: 20.0,
         right: 20.0,
-        child: Material(
-          elevation: 8.0,
+        child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
-          child: Stack(
-            children: [
-              BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                child: Container(
-                  color: Colors.black.withOpacity(0.6), // 백그라운드 색상은 여기에
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                    child: Text(
-                      '파일 용량이 10MB를 초과할 수 없습니다.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+            child: Material(
+              elevation: 4.0,
+              borderRadius: BorderRadius.circular(8),
+              child: Stack(
+                children: [
+                  BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                    child: Container(
+                      color: Colors.black.withOpacity(0.6), // 백그라운드 색상은 여기에
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                        child: Text(
+                          '파일 용량이 10MB를 초과할 수 없습니다.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -239,7 +251,7 @@ class _PhotoSelectScreenState extends ConsumerState<GalleryViewScreen> {
                   ref.read(communityTownProvider.notifier).setFinalFiles(ref.read(selectedImagesProvider));
                   GoRouter.of(context).pop();
                 },
-                child: Text('추가', style: DaepiroTextStyle.body_1_m.copyWith(color: DaepiroColorStyle.g_400),))
+                child: Text('추가', style: DaepiroTextStyle.body_1_m.copyWith(color: DaepiroColorStyle.o_500),))
           ],
         ),
       ),

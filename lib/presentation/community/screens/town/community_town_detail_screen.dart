@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:daepiro/cmm/dialog/basic_dialog.dart';
 import 'package:daepiro/presentation/mypage/controller/mypage_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
@@ -80,7 +82,6 @@ class CommunityTownDetailState
                               state.selectContentId == null)
                           ? Text('데이터 로드중 오류가 발생했어요! 다시 시도해주세요.')
                           : Scrollbar(
-                              controller: scrollController,
                               child: SingleChildScrollView(
                                 controller: scrollController,
                                 child: Column(
@@ -215,12 +216,21 @@ class CommunityTownDetailState
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          ClipOval(
-            child: Image.network(
-              content.authorUser.profileImageUrl,
-              fit: BoxFit.cover,
-              width: 40,
-              height: 40,
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: DaepiroColorStyle.g_50,
+              border: Border.all(width: 1, color:DaepiroColorStyle.g_50)
+            ),
+            child: ClipOval(
+              child: Image.network(
+                content.authorUser.profileImageUrl,
+                fit: BoxFit.cover,
+                width: 40,
+                height: 40,
+              ),
             ),
           ),
           SizedBox(width: 10),
@@ -403,14 +413,22 @@ class CommunityTownDetailState
                       itemCount: content.files.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          width: 118,
-                          margin: EdgeInsets.only(right: 8),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(4),
-                            child: Image.network(
-                              content.files[index],
-                              fit: BoxFit.fill,
+                        return GestureDetector(
+                          onTap: () {
+                            GoRouter.of(context).push(
+                                '/community_photo_screen',
+                              extra: content.files
+                            );
+                          },
+                          child: Container(
+                            width: 118,
+                            margin: EdgeInsets.only(right: 8),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(4),
+                              child: Image.network(
+                                content.files[index],
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         );
@@ -913,23 +931,29 @@ class CommunityTownDetailState
         bottom: 50.0,
         left: 20.0,
         right: 20.0,
-        child: Material(
-          elevation: 8.0,
+        child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
-          color: Colors.black.withOpacity(0.6),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    isSuccess ? '게시글이 삭제되었어요.' : '다시 시도해주세요.',
-                    style: DaepiroTextStyle.body_2_m
-                        .copyWith(color: DaepiroColorStyle.white),
-                  ),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+            child: Material(
+              elevation: 4.0,
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.black.withOpacity(0.6),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        isSuccess ? '게시글이 삭제되었어요.' : '다시 시도해주세요.',
+                        style: DaepiroTextStyle.body_2_m
+                            .copyWith(color: DaepiroColorStyle.white),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
