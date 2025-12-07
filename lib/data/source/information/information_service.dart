@@ -1,6 +1,3 @@
-import 'package:daepiro/data/model/request/register_user_location_request.dart';
-import 'package:daepiro/data/model/response/basic_response.dart';
-import 'package:daepiro/data/model/response/information/around_shelter_list_response.dart';
 import 'package:daepiro/data/model/response/information/behavior_list_response.dart';
 import 'package:daepiro/data/model/response/information/disaster_contents_list_response.dart';
 import 'package:dio/dio.dart';
