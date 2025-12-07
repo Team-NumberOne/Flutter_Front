@@ -9,6 +9,7 @@ import 'package:daepiro/presentation/information/contents/search/search_disaster
 import 'package:daepiro/presentation/information/behavior_tip/search/search_disaster_type_screen.dart';
 import 'package:daepiro/presentation/community/screens/community_rule_screen.dart';
 import 'package:daepiro/presentation/information/shelter/around_shelter_extra.dart';
+import 'package:daepiro/presentation/network_no_connect/offline_map_page.dart';
 import 'package:daepiro/presentation/onboarding/screens/juso_input_screen.dart';
 import 'package:daepiro/presentation/onboarding/screens/onboarding_third_screen.dart';
 import 'package:daepiro/presentation/sponsor/cheer_report_screen.dart';
@@ -89,6 +90,10 @@ final goRouteProvider = Provider((ref) {
       GoRoute(
         path: '/splash',
         builder: (context, state) => const SplashScreen(),
+      ),
+      GoRoute(
+        path: '/no_network',
+        builder: (context, state) => OfflineMapPage(),
       ),
       GoRoute(
         path: '/login',
