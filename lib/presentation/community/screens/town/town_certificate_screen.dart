@@ -6,12 +6,10 @@ import 'package:daepiro/presentation/community/controller/town_certificate_view_
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:video_player/video_player.dart';
 import '../../../../cmm/DaepiroTheme.dart';
 import '../../../../cmm/button/secondary_filled_button.dart';
 import '../../state/town_certificate_state.dart';
@@ -28,19 +26,19 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
   String selectAddress = '';
   bool isFirstDialogAppear = false;
   bool isSecondDialogAppear = false;
-  NMarker? currentMarker;
-  late NaverMapController _mapController;
-  late VideoPlayerController controller;
+  // NMarker? currentMarker;
+  // late NaverMapController _mapController;
+  //late VideoPlayerController controller;
 
   bool isvalue = true;
 
   @override
   void initState() {
     super.initState();
-    controller = controller =
-        VideoPlayerController.asset('assets/videos/badge_video.mp4')
-          ..initialize()
-          ..setLooping(true);
+    // controller = controller =
+    //     VideoPlayerController.asset('assets/videos/badge_video.mp4')
+    //       ..initialize()
+    //       ..setLooping(true);
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -54,17 +52,17 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
     final state = ref.watch(townCertificateProvider);
 
     setState(() {
-      currentMarker = NMarker(
-        id: 'daepiro',
-        icon: NOverlayImage.fromAssetImage('assets/icons/icon_location_58.png'),
-        position: NLatLng(state.latitude, state.longitude),
-      );
-      _mapController.addOverlay(currentMarker!);
+      // currentMarker = NMarker(
+      //   id: 'daepiro',
+      //   icon: NOverlayImage.fromAssetImage('assets/icons/icon_location_58.png'),
+      //   position: NLatLng(state.latitude, state.longitude),
+      // );
+      // _mapController.addOverlay(currentMarker!);
     });
-    _mapController.updateCamera(NCameraUpdate.scrollAndZoomTo(
-      target: NLatLng(state.latitude, state.longitude),
-      zoom: 15.0,
-    ));
+    // _mapController.updateCamera(NCameraUpdate.scrollAndZoomTo(
+    //   target: NLatLng(state.latitude, state.longitude),
+    //   zoom: 15.0,
+    // ));
   }
 
   Future<void> _updateLocation() async {
@@ -75,21 +73,21 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
     await viewModel.getUserLocation();
     await viewModel.setCertificate(townState.townLongAddressList);
 
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      _mapController.deleteOverlay(currentMarker!.info);
-
-      currentMarker = NMarker(
-        id: 'daepiro',
-        icon: NOverlayImage.fromAssetImage('assets/icons/icon_location_58.png'),
-        position: NLatLng(state.latitude, state.longitude),
-      );
-
-      _mapController.addOverlay(currentMarker!);
-      _mapController.updateCamera(NCameraUpdate.scrollAndZoomTo(
-        target: NLatLng(state.latitude, state.longitude),
-      ));
-      setState(() {});
-    });
+    // SchedulerBinding.instance.addPostFrameCallback((_) {
+    //   _mapController.deleteOverlay(currentMarker!.info);
+    //
+    //   currentMarker = NMarker(
+    //     id: 'daepiro',
+    //     icon: NOverlayImage.fromAssetImage('assets/icons/icon_location_58.png'),
+    //     position: NLatLng(state.latitude, state.longitude),
+    //   );
+    //
+    //   _mapController.addOverlay(currentMarker!);
+    //   _mapController.updateCamera(NCameraUpdate.scrollAndZoomTo(
+    //     target: NLatLng(state.latitude, state.longitude),
+    //   ));
+    //   setState(() {});
+    // });
   }
 
   @override
@@ -112,7 +110,7 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
   @override
   void dispose() {
     super.dispose();
-    controller.dispose();
+    //controller.dispose();
     WidgetsBinding.instance.removeObserver(this);
   }
 
@@ -143,7 +141,7 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
 
     ref.listen<TownCertificateState>(townCertificateProvider, (previous, next) {
       if (next.isSuccessCertificate) {
-        controller.play();
+        //controller.play();
       }
     });
 
@@ -184,20 +182,21 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
                                           child: Container(
                                             width: double.infinity,
                                             height: state.isSuccessCertificate ? 317 : 411,
-                                            child: NaverMap(
-                                              options: NaverMapViewOptions(
-                                                  initialCameraPosition:
-                                                  NCameraPosition(
-                                                      target: NLatLng(
-                                                          state.latitude,
-                                                          state.longitude),
-                                                      zoom: 15.0),
-                                                  indoorEnable: true,
-                                                  logoClickEnable: false),
-                                              onMapReady: (controller) async {
-                                                _mapController = controller;
-                                              },
-                                            ),
+                                            child: SizedBox.shrink()
+                                            // NaverMap(
+                                            //   options: NaverMapViewOptions(
+                                            //       initialCameraPosition:
+                                            //       NCameraPosition(
+                                            //           target: NLatLng(
+                                            //               state.latitude,
+                                            //               state.longitude),
+                                            //           zoom: 15.0),
+                                            //       indoorEnable: true,
+                                            //       logoClickEnable: false),
+                                            //   onMapReady: (controller) async {
+                                            //     _mapController = controller;
+                                            //   },
+                                            // ),
                                           ),
                                         ),
                                         Positioned(
@@ -736,41 +735,42 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
   }
 
   Widget successCertificate(String selectAddress) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 80,
-              height: 80,
-              child: FutureBuilder(
-                future: controller.initialize(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    controller.setLooping(true);
-                    controller.play();
-                    return VideoPlayer(controller);
-                  } else {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                },
-              ),
-            ),
-            SizedBox(height: 12),
-            Text(
-              '\'${selectAddress}\' 주민 뱃지를 얻었어요!',
-              style: DaepiroTextStyle.body_1_b.copyWith(color: DaepiroColorStyle.g_700),
-            ),
-            Text(
-              '동네생활에서 주민들과 함께 안전한 동네를 만들어요.',
-              style: DaepiroTextStyle.body_2_m.copyWith(color: DaepiroColorStyle.g_500),
-            ),
-          ],
-        );
-      },
-    );
+    return SizedBox.shrink();
+    // return LayoutBuilder(
+    //   builder: (context, constraints) {
+    //     return Column(
+    //       mainAxisSize: MainAxisSize.min,
+    //       crossAxisAlignment: CrossAxisAlignment.center,
+    //       children: [
+    //         SizedBox(
+    //           width: 80,
+    //           height: 80,
+    //           child: FutureBuilder(
+    //             future: controller.initialize(),
+    //             builder: (context, snapshot) {
+    //               if (snapshot.connectionState == ConnectionState.done) {
+    //                 controller.setLooping(true);
+    //                 controller.play();
+    //                 return VideoPlayer(controller);
+    //               } else {
+    //                 return Center(child: CircularProgressIndicator());
+    //               }
+    //             },
+    //           ),
+    //         ),
+    //         SizedBox(height: 12),
+    //         Text(
+    //           '\'${selectAddress}\' 주민 뱃지를 얻었어요!',
+    //           style: DaepiroTextStyle.body_1_b.copyWith(color: DaepiroColorStyle.g_700),
+    //         ),
+    //         Text(
+    //           '동네생활에서 주민들과 함께 안전한 동네를 만들어요.',
+    //           style: DaepiroTextStyle.body_2_m.copyWith(color: DaepiroColorStyle.g_500),
+    //         ),
+    //       ],
+    //     );
+    //   },
+    // );
   }
 
 

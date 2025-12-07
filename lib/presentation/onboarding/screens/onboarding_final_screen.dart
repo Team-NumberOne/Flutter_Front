@@ -3,7 +3,6 @@ import 'package:daepiro/presentation/onboarding/controller/onboarding_view_model
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:video_player/video_player.dart';
 import '../../../cmm/DaepiroTheme.dart';
 import '../../../cmm/button/primary_filled_button.dart';
 class OnboardingFinalScreen extends ConsumerStatefulWidget {
@@ -13,21 +12,21 @@ class OnboardingFinalScreen extends ConsumerStatefulWidget {
   _OnboardingFinalState createState() => _OnboardingFinalState();
 }
 class _OnboardingFinalState extends ConsumerState<OnboardingFinalScreen> {
-  late VideoPlayerController controller;
+  //late VideoPlayerController controller;
 
   @override
   void initState() {
     super.initState();
-    controller = controller = VideoPlayerController.asset('assets/videos/outtro_video.mp4')..initialize();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.play();
-    });
+    // controller = controller = VideoPlayerController.asset('assets/videos/outtro_video.mp4')..initialize();
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   controller.play();
+    // });
   }
 
   @override
   void dispose() {
     super.dispose();
-    controller.dispose();
+    //controller.dispose();
   }
 
   @override
@@ -50,10 +49,11 @@ class _OnboardingFinalState extends ConsumerState<OnboardingFinalScreen> {
                     fit: BoxFit.fitWidth,
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      child: AspectRatio(
-                        aspectRatio: controller.value.aspectRatio,
-                        child: VideoPlayer(controller),
-                      ),
+                      // child: AspectRatio(
+                      //   aspectRatio: controller.value.aspectRatio,
+                      //   child: VideoPlayer(controller),
+                      // ),
+                      child: Text('dkfj'),
                     ),
                   )
               ),
