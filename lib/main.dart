@@ -4,11 +4,15 @@ import 'package:daepiro/route/router.dart';
 import 'package:daepiro/set_fcm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'cmm/DaepiroTheme.dart';
+import 'data/model/local_db/behavior_tip/behavior_adapter.dart';
+import 'data/model/local_db/behavior_tip/tip_item_adapter.dart';
+import 'data/model/local_db/behavior_tip/tips_adapter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,16 +30,28 @@ Future<void> main() async {
   // FirebaseMessaging messaging = FirebaseMessaging.instance;
   // String? token = await messaging.getToken();
   // print("FCM 토큰: $token");
+  // hive db 초기화
+  await _hiveInit();
   runApp(const ProviderScope(child: MyApp()));
+}
+
+Future<void> _hiveInit() async {
+  await Hive.initFlutter();
+
+  Hive.registerAdapter(TipItemAdapter());
+  Hive.registerAdapter(TipsAdapter());
+  Hive.registerAdapter(BehaviorAdapter());
+
+  await Hive.openBox<String>('behaviorTipsBox');
 }
 
 Future<void> _naverInit() async {
   await dotenv.load(fileName: ".env");
   String naverMapKey = dotenv.get('NAVER_MAP_CLIENTID');
-  await NaverMapSdk.instance.initialize(
-    clientId: naverMapKey,
-    onAuthFailed: (e) => print("네이버맵 인증 오류:$e")
-  );
+  // await NaverMapSdk.instance.initialize(
+  //   clientId: naverMapKey,
+  //   onAuthFailed: (e) => print("네이버맵 인증 오류:$e")
+  // );
   return;
 }
 
