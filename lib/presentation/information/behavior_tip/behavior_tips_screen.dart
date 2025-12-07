@@ -1,4 +1,3 @@
-import 'package:daepiro/presentation/information/behavior_tip/behavior_tips_state.dart';
 import 'package:daepiro/presentation/information/behavior_tip/behavior_tips_view_model.dart';
 import 'package:daepiro/presentation/information/component/behavior_tip_bottom_sheet.dart';
 import 'package:daepiro/presentation/information/component/disaster_type.dart';
@@ -7,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../../cmm/DaepiroTheme.dart';
-import '../main/information_view_model.dart';
 
 class BehaviorTipsScreen extends ConsumerStatefulWidget {
   const BehaviorTipsScreen({super.key});

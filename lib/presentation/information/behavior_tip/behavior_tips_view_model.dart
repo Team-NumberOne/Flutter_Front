@@ -1,5 +1,10 @@
 import 'package:daepiro/domain/usecase/information/get_behavior_list_usecase.dart';
+import 'package:daepiro/data/model/response/information/behavior_list_response.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../data/model/local_db/behavior_tip/behavior_adapter.dart' as hive;
+import '../../../data/model/local_db/behavior_tip/tip_item_adapter.dart';
+import '../../../data/model/local_db/behavior_tip/tips_adapter.dart' as hiveTips;
+import '../../../domain/repository/local/behavior_repository.dart';
 import 'behavior_tips_state.dart';
 
 final behaviorTipsStateNotifierProvider = StateNotifierProvider<BehaviorTipsViewModel, BehaviorTipsState>((ref) {
@@ -129,10 +134,18 @@ class BehaviorTipsViewModel extends StateNotifier<BehaviorTipsState> {
         state = state.copyWith(
             emergencyBehaviorList: response.data ?? []
         );
+        if(response.data != null) {
+          final behaviorList = convertToHiveBehaviorList(response.data!);
+          await saveBehaviorLocalDB(behaviorList);
+        }
       } else {
         state = state.copyWith(
             commonBehaviorList: response.data ?? []
         );
+        if(response.data != null) {
+          final behaviorList = convertToHiveBehaviorList(response.data!);
+          await saveBehaviorLocalDB(behaviorList);
+        }
       }
 
     } catch (error) {
@@ -140,5 +153,32 @@ class BehaviorTipsViewModel extends StateNotifier<BehaviorTipsState> {
       state = state.copyWith(isLoading: false);
     }
   }
+
+  Future<void> saveBehaviorLocalDB(List<hive.Behavior> behaviorList) async {
+    final repo = BehaviorRepository();
+
+    if(repo.hasData()) return;
+
+    await repo.saveAll(behaviorList);
+  }
+
+  List<hive.Behavior> convertToHiveBehaviorList(List<Behavior> apiList) {
+    return apiList.map((apiBehavior) {
+      return hive.Behavior(
+        id: apiBehavior.id,
+        name: apiBehavior.name,
+        tips: apiBehavior.tips?.map((apiTips) {
+          return hiveTips.Tips(
+            filter: apiTips.filter,
+            tips: apiTips.tips
+                ?.map((tuple) => TipItem(tuple.$1, tuple.$2))
+                .toList(),
+          );
+        }).toList(),  // <-- null 안전하게 처리됨
+      );
+    }).toList();
+  }
+
+
 
 }
