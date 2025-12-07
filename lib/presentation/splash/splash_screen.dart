@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:daepiro/presentation/onboarding/controller/onboarding_view_model.dart';
 import 'package:daepiro/route/router.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerPr
       duration: const Duration(seconds: 5)
     );
     _controller.forward();
+    _checkNetworkCoonnect();
     checkAuth().then((isAuthenticated) {
       Future.delayed(const Duration(seconds: 5), () async {
         bool isfirstlaunch = await _isFirstLaunch();
@@ -58,6 +60,15 @@ class _SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerPr
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  Future<bool> _checkNetworkCoonnect() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if(connectivityResult.contains(ConnectivityResult.none)) {
+      GoRouter.of(context).replace('/no_network');
+      return false;
+    }
+    return true;
   }
 
   Future<bool> checkAuth() async {
