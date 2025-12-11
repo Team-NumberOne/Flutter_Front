@@ -28,18 +28,23 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.numberone.daepiro"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 35
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+        coreLibraryDesugaringEnabled true
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     defaultConfig {
         applicationId = "com.numberone.daepiro"
         minSdk = 23
-        targetSdk = flutter.targetSdkVersion
+        targetSdk = 35
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
         buildConfigField("String", "KAKAO_NATIVE_APP_KEY", "\"${getBaseUrl(localProperties, "KAKAO_NATIVE_APP_KEY")}\"")
@@ -55,20 +60,25 @@ android {
 
     signingConfigs {
         release {
-            release {
-                keyAlias keystoreProperties['keyAlias']
-                storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-                keyPassword keystoreProperties['keyPassword']
-                storePassword keystoreProperties['storePassword']
-            }
+            keyAlias keystoreProperties['keyAlias']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            keyPassword keystoreProperties['keyPassword']
+            storePassword keystoreProperties['storePassword']
         }
     }
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.release
+            debuggable false
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
         }
     }
+}
+
+dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 }
 
 flutter {
