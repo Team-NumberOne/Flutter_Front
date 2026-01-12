@@ -23,7 +23,6 @@ class SettingFCM {
 
     await _localNotifications.initialize(settings,
         onDidReceiveNotificationResponse: (NotificationResponse response) {
-      print('알림 클릭!!!!!');
     });
 
     const androidChannel = AndroidNotificationChannel(
@@ -55,8 +54,6 @@ class SettingFCM {
       String body = notification.isEmpty
           ? message.notification!.body
           : notification['body'];
-      print('알림 notification: $title');
-      print('알림 notification: $body');
 
       _localNotifications.show(
         notification.hashCode,
