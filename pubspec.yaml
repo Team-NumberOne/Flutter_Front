@@ -3,9 +3,10 @@ description: "A new Flutter project."
 publish_to: 'none'
 
 version: 1.0.1+5
-# flutter version 3.29.3
+# flutter version 3.35.7
 environment:
-  sdk: '>=3.7.2 <4.0.0'
+  sdk: '>=3.5.0 <4.0.0'
+  flutter: '>=3.35.7'
 
 dependencies:
   flutter:
@@ -56,7 +57,7 @@ dependencies:
   image_picker: ^1.1.2
 
   #onboading video
-  #video_player: 2.10.1
+  video_player: 2.10.1
 
   intl: ^0.20.1
   url_launcher: ^6.3.1
