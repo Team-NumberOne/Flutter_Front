@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$HomeState {
   double get latitude => throw _privateConstructorUsedError;
   double get longitude => throw _privateConstructorUsedError;
-  String get location => throw _privateConstructorUsedError;
+  String get location => throw _privateConstructorUsedError; // 현재 위치는 ㅇㅇ
   String get nickname => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   bool get isOccurred => throw _privateConstructorUsedError; // --재난 발생시
@@ -546,6 +546,7 @@ class _$HomeStateImpl implements _HomeState {
   @override
   @JsonKey()
   final String location;
+// 현재 위치는 ㅇㅇ
   @override
   @JsonKey()
   final String nickname;
@@ -876,7 +877,7 @@ abstract class _HomeState implements HomeState {
   double get longitude;
   @override
   String get location;
-  @override
+  @override // 현재 위치는 ㅇㅇ
   String get nickname;
   @override
   bool get isLoading;

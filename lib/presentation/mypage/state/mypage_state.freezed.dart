@@ -19,12 +19,9 @@ mixin _$MyPageState {
   dynamic get isLoading => throw _privateConstructorUsedError;
 
   /// 사용자 정보 수정
-  dynamic get profileImgUrl =>
-      throw _privateConstructorUsedError; //@Default('') realName,
-  dynamic get nickName =>
-      throw _privateConstructorUsedError; //@Default('') String nameState,
-  String get nicknameState =>
-      throw _privateConstructorUsedError; //@Default(false) bool completeSetName,
+  dynamic get profileImgUrl => throw _privateConstructorUsedError;
+  dynamic get nickName => throw _privateConstructorUsedError;
+  String get nicknameState => throw _privateConstructorUsedError;
   bool get completeSetNickName => throw _privateConstructorUsedError;
   dynamic get communityAlarmState => throw _privateConstructorUsedError;
   dynamic get disasterAlarmState => throw _privateConstructorUsedError;
@@ -501,15 +498,12 @@ class _$MyPageStateImpl implements _MyPageState {
   @override
   @JsonKey()
   final dynamic profileImgUrl;
-//@Default('') realName,
   @override
   @JsonKey()
   final dynamic nickName;
-//@Default('') String nameState,
   @override
   @JsonKey()
   final String nicknameState;
-//@Default(false) bool completeSetName,
   @override
   @JsonKey()
   final bool completeSetNickName;
@@ -770,11 +764,11 @@ abstract class _MyPageState implements MyPageState {
 
   /// 사용자 정보 수정
   dynamic get profileImgUrl;
-  @override //@Default('') realName,
+  @override
   dynamic get nickName;
-  @override //@Default('') String nameState,
+  @override
   String get nicknameState;
-  @override //@Default(false) bool completeSetName,
+  @override
   bool get completeSetNickName;
   @override
   dynamic get communityAlarmState;

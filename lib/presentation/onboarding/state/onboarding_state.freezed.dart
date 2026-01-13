@@ -17,12 +17,9 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$OnboardingState {
 //주소 검색 오류 상태
-  bool get isError =>
-      throw _privateConstructorUsedError; //@Default('') String nameState,
-  String get nicknameState =>
-      throw _privateConstructorUsedError; //@Default(false) bool completeSetName,
-  bool get completeSetNickName =>
-      throw _privateConstructorUsedError; //@Default('') String userName,
+  bool get isError => throw _privateConstructorUsedError;
+  String get nicknameState => throw _privateConstructorUsedError;
+  bool get completeSetNickName => throw _privateConstructorUsedError;
   String get userNickName => throw _privateConstructorUsedError; //입력한 주소값
   String get homeJuso => throw _privateConstructorUsedError;
   String get firstJuso => throw _privateConstructorUsedError;
@@ -362,15 +359,12 @@ class _$OnboardingStateImpl implements _OnboardingState {
   @override
   @JsonKey()
   final bool isError;
-//@Default('') String nameState,
   @override
   @JsonKey()
   final String nicknameState;
-//@Default(false) bool completeSetName,
   @override
   @JsonKey()
   final bool completeSetNickName;
-//@Default('') String userName,
   @override
   @JsonKey()
   final String userNickName;
@@ -543,11 +537,11 @@ abstract class _OnboardingState implements OnboardingState {
 
   @override //주소 검색 오류 상태
   bool get isError;
-  @override //@Default('') String nameState,
+  @override
   String get nicknameState;
-  @override //@Default(false) bool completeSetName,
+  @override
   bool get completeSetNickName;
-  @override //@Default('') String userName,
+  @override
   String get userNickName;
   @override //입력한 주소값
   String get homeJuso;

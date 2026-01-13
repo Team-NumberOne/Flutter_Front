@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-abstract class BaseView<VM, S> extends ConsumerWidget {
+abstract class BaseView<ViewModel extends StateNotifier<S>, S> extends ConsumerWidget {
   const BaseView({super.key});
 
   /// 각 View에서 반드시 제공
-  StateNotifierProvider<VM, S> get provider;
+  StateNotifierProvider<ViewModel, S> get provider;
 
   /// 실제 UI 구현부
   Widget buildView(
       BuildContext context,
       WidgetRef ref,
       S state,
-      VM viewModel,
+      ViewModel viewModel,
       );
 
   @override
