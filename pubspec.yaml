@@ -105,7 +105,16 @@ dev_dependencies:
   flutter_lints: ^3.0.0
   json_serializable: ^6.8.0
   build_runner: ^2.4.11 # flutter pub run build_runner build
+  flutter_gen_runner: 5.4.0
   hive_generator: ^2.0.1
+
+flutter_gen:
+  output: lib/resource/
+  integrations:
+  image: true
+  flutter_svg: true
+  lottie: true
+
 
 flutter:
   uses-material-design: true

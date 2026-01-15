@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../../cmm/theme/DaepiroTheme.dart';
 import '../../../cmm/widget/button/secondary_filled_button.dart';
+import '../../../resource/strings/AppStrings.dart';
 import '../controller/onboarding_view_model.dart';
 
 class JusoInputScreen extends ConsumerStatefulWidget {
@@ -95,13 +96,12 @@ class JusoInputState extends ConsumerState<JusoInputScreen> {
               jusoInputTextField(ref, jusoController, focusNode),
               SizedBox(height: 16),
               Text(
-                '검색결과',
+                AppStrings.jusoInput_Message_SearchResult,
                 style: DaepiroTextStyle.body_2_m.copyWith(
                   color: DaepiroColorStyle.g_400,
                 ),
               ),
               SizedBox(height: 8),
-
               if (!widget.fromMyPage &&
                   (state.isError || (focusNode.hasFocus && resultAddress.inputJusoList.isEmpty)))
                 searchErrorWidget(),
@@ -206,7 +206,7 @@ class JusoInputState extends ConsumerState<JusoInputScreen> {
             ),
             typeChipWidget(),
             Text(
-              ' 어디인가요?',
+              AppStrings.jusoInput_Message_guide,
               style: DaepiroTextStyle.h5.copyWith(
                   color: DaepiroColorStyle.g_900),
             )
@@ -224,13 +224,13 @@ class JusoInputState extends ConsumerState<JusoInputScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                '올바르지 않은 주소예요',
+                AppStrings.jusoInput_ErrorMessage_InvalidAddress,
                 style: DaepiroTextStyle.body_1_b.copyWith(
                     color: DaepiroColorStyle.g_600),
               ),
-              SizedBox(height: 4),
+              const SizedBox(height: 4),
               Text(
-                  '동/읍/면/리 주소로 다시 검색해주세요.',
+                  AppStrings.jusoInput_ErrorMessage_RetrySearch,
                   style: DaepiroTextStyle.body_2_m.copyWith(
                       color: DaepiroColorStyle.g_600)),
             ],
@@ -299,7 +299,7 @@ class JusoInputState extends ConsumerState<JusoInputScreen> {
             isDense: true,
             contentPadding: EdgeInsets.all(16),
             fillColor: DaepiroColorStyle.g_50,
-            hintText: '동/읍/면/리',
+            hintText: AppStrings.jusoInput_HintText_hintType,
             hintStyle: DaepiroTextStyle.body_1_m.copyWith(
                 color: DaepiroColorStyle.g_200),
             suffixIcon: Padding(
