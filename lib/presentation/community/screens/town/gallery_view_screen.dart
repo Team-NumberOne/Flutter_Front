@@ -11,7 +11,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 
-import '../../../../cmm/DaepiroTheme.dart';
+import '../../../../cmm/theme/DaepiroTheme.dart';
 import '../../../../data/model/Album.dart';
 import '../../../../data/model/selected_image.dart';
 

@@ -1,7 +1,7 @@
 import 'package:daepiro/presentation/const/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../../cmm/DaepiroTheme.dart';
+import '../../../cmm/theme/DaepiroTheme.dart';
 
 class DisasterContentsMainItem extends StatelessWidget {
   final String type;

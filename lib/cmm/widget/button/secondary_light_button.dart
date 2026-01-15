@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../DaepiroTheme.dart';
+import '../../theme/DaepiroTheme.dart';
 
 class SecondaryLightButton extends StatefulWidget {
   final VoidCallback? onPressed;

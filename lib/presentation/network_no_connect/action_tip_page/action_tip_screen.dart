@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:daepiro/data/model/response/information/behavior_list_response.dart';
 import 'action_tip_viewmodel.dart';
-import '../../../cmm/DaepiroTheme.dart';
+import '../../../cmm/theme/DaepiroTheme.dart';
 import '../../information/component/behavior_tip_bottom_sheet.dart';
 import '../../information/component/disaster_type.dart';
 

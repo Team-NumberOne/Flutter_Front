@@ -1,7 +1,7 @@
 import 'package:daepiro/presentation/const/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../../cmm/DaepiroTheme.dart';
+import '../../../cmm/theme/DaepiroTheme.dart';
 import '../../../data/model/response/information/behavior_list_response.dart';
 import 'behavior_tip_bottom_sheet.dart';
 

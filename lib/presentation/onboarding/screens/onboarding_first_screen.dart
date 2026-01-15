@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../cmm/DaepiroTheme.dart';
-import '../../../cmm/button/primary_filled_button.dart';
+import '../../../cmm/theme/DaepiroTheme.dart';
+import '../../../cmm/widget/button/primary_filled_button.dart';
 
 class OnboardingFirstScreen extends StatefulWidget {
   const OnboardingFirstScreen({super.key});

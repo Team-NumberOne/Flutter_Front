@@ -4,8 +4,8 @@ import 'package:daepiro/presentation/community/controller/community_town_view_mo
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../cmm/DaepiroTheme.dart';
-import '../../../cmm/button/secondary_filled_button.dart';
+import '../../../cmm/theme/DaepiroTheme.dart';
+import '../../../cmm/widget/button/secondary_filled_button.dart';
 
 //수정하기 & 삭제하기
 class ReplyMenuScreen extends ConsumerWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../cmm/DaepiroTheme.dart';
+import '../../../cmm/theme/DaepiroTheme.dart';
 import '../../const/utils.dart';
 
 class PopularPostPreview extends StatefulWidget {

@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:daepiro/presentation/community/controller/community_town_view_model.dart';
 import 'package:daepiro/presentation/community/screens/town/gallery_view_screen.dart';
 import 'package:daepiro/presentation/community/screens/town/horizon_photo_widget.dart';
@@ -9,8 +8,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../../../../cmm/DaepiroTheme.dart';
-import '../../../../cmm/button/secondary_filled_button.dart';
+import '../../../../cmm/theme/DaepiroTheme.dart';
+import '../../../../cmm/widget/button/secondary_filled_button.dart';
 import '../../../../data/model/response/community/community_dongnae_content_detail_response.dart';
 
 class CommunityTownWritingScreen extends ConsumerStatefulWidget {

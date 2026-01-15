@@ -4,8 +4,8 @@ import 'package:daepiro/presentation/information/shelter/around_shelter_extra.da
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import '../../../cmm/DaepiroTheme.dart';
-import '../../../cmm/chip/secondary_chip.dart';
+import '../../../cmm/theme/DaepiroTheme.dart';
+import '../../../cmm/widget/chip/secondary_chip.dart';
 import '../../const/const.dart';
 
 class AroundShelterScreen extends StatefulWidget {

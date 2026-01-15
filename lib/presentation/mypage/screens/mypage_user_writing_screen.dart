@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../cmm/DaepiroTheme.dart';
+import '../../../cmm/theme/DaepiroTheme.dart';
 import '../../../data/model/response/mypage/get_mypage_articles_response.dart';
 import '../../community/controller/community_town_view_model.dart';
 import '../../const/utils.dart';

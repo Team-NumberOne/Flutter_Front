@@ -3,7 +3,7 @@ import 'package:daepiro/presentation/information/component/search_disaster_type.
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../cmm/DaepiroTheme.dart';
+import '../../../../cmm/theme/DaepiroTheme.dart';
 
 class SearchDisasterTypeScreen extends StatefulWidget {
   final List<Behavior> behaviorList;

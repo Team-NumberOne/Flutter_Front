@@ -1,10 +1,10 @@
-
 import 'package:daepiro/presentation/onboarding/controller/onboarding_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../cmm/DaepiroTheme.dart';
-import '../../../cmm/button/primary_filled_button.dart';
+import '../../../cmm/theme/DaepiroTheme.dart';
+import '../../../cmm/widget/button/primary_filled_button.dart';
+
 class OnboardingFinalScreen extends ConsumerStatefulWidget {
   const OnboardingFinalScreen({super.key});
 

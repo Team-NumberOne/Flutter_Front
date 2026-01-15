@@ -3,8 +3,8 @@ import 'package:daepiro/presentation/community/controller/community_disaster_vie
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../cmm/DaepiroTheme.dart';
-import '../../../../cmm/button/secondary_filled_button.dart';
+import '../../../cmm/theme/DaepiroTheme.dart';
+import '../../../cmm/widget/button/secondary_filled_button.dart';
 
 class CheerCommentMenu extends ConsumerWidget {
   final bool isMine;

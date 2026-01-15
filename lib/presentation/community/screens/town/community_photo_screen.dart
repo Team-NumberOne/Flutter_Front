@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:photo_view/photo_view.dart';
 
-import '../../../../cmm/DaepiroTheme.dart';
+import '../../../../cmm/theme/DaepiroTheme.dart';
 
 class CommunityPhotoScreen extends ConsumerWidget {
   final List<String>? fileList;

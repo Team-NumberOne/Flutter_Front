@@ -9,7 +9,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'cmm/DaepiroTheme.dart';
+import 'cmm/theme/DaepiroTheme.dart';
 import 'data/model/local_db/behavior_tip/behavior_adapter.dart';
 import 'data/model/local_db/behavior_tip/tip_item_adapter.dart';
 import 'data/model/local_db/behavior_tip/tips_adapter.dart';

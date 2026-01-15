@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../cmm/DaepiroTheme.dart';
+import '../../../../cmm/theme/DaepiroTheme.dart';
 
 class CommunityTownAddressMenuScreen extends ConsumerWidget {
   const CommunityTownAddressMenuScreen({super.key});

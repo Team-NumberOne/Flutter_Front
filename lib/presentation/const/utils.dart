@@ -2,7 +2,7 @@ import 'package:daepiro/presentation/const/common_disaster_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
-import '../../cmm/DaepiroTheme.dart';
+import '../../cmm/theme/DaepiroTheme.dart';
 import 'emergency_disaster_list.dart';
 
 // "2024-12-15T18:08:00" 형식의 String을 yyyy.mm.dd 형태로 변환

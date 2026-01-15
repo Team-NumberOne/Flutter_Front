@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:daepiro/presentation/const/utils.dart';
-import '../../../cmm/DaepiroTheme.dart';
+import '../../../cmm/theme/DaepiroTheme.dart';
 import '../../../data/model/response/mypage/get_mypage_announcements_list_response.dart';
 import '../controller/mypage_viewmodel.dart';
 

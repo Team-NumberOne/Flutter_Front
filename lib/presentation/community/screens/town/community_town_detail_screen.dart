@@ -1,14 +1,13 @@
 import 'dart:ui';
-
-import 'package:daepiro/cmm/dialog/basic_dialog.dart';
 import 'package:daepiro/presentation/mypage/controller/mypage_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../cmm/DaepiroTheme.dart';
-import '../../../../cmm/button/secondary_filled_button.dart';
+import '../../../../cmm/theme/DaepiroTheme.dart';
+import '../../../../cmm/widget/button/secondary_filled_button.dart';
+import '../../../../cmm/widget/dialog/basic_dialog.dart';
 import '../../../../data/model/response/community/community_dongnae_content_detail_response.dart';
 import '../../../const/utils.dart';
 import '../../controller/community_town_view_model.dart';

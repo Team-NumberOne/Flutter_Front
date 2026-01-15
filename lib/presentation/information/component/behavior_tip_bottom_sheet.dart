@@ -1,11 +1,9 @@
 import 'package:daepiro/data/model/response/information/behavior_list_response.dart';
-import 'package:daepiro/presentation/const/const.dart';
-import 'package:daepiro/presentation/information/main/information_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../../cmm/DaepiroTheme.dart';
-import '../../../cmm/chip/secondary_chip.dart';
+import '../../../cmm/theme/DaepiroTheme.dart';
+import '../../../cmm/widget/chip/secondary_chip.dart';
 import '../../home/component/action_tip_item.dart';
 import '../behavior_tip/behavior_tips_view_model.dart';
 
