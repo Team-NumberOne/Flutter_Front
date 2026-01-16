@@ -1,5 +1,20 @@
 import 'package:flutter/material.dart';
 
+class DaepiroTheme {
+  final DaepiroTextStyle textTheme;
+  final DaepiroColorStyle colorTheme;
+  final ThemeData themeData;
+  const DaepiroTheme({required this.themeData, required this.textTheme, required this.colorTheme});
+
+  Color get backgroundColor => themeData.colorScheme.surface;
+
+  Color get primaryColor => themeData.primaryColor;
+
+  Color get unselectedWidgetColor => themeData.unselectedWidgetColor;
+
+  IconThemeData get iconTheme => themeData.iconTheme;
+}
+
 class DaepiroColorStyle {
   static const Color black = Color(0xFF000000);
   static const Color white = Color(0xFFFFFFFF);
@@ -131,3 +146,7 @@ class DaepiroTextStyle {
       height: 1.2
   );
 }
+
+final ThemeData _lightThemeData = ThemeData();
+
+final DaepiroTheme lightTheme = DaepiroTheme(themeData: _lightThemeData, textTheme: _lightTextTheme, colorTheme: );

@@ -6,7 +6,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../../cmm/theme/DaepiroTheme.dart';
 import '../../../cmm/widget/button/secondary_filled_button.dart';
-import '../../../resource/strings/AppStrings.dart';
+import '../../../resource/message/AppStrings.dart';
+import '../../../resource/resource.dart';
 import '../controller/onboarding_view_model.dart';
 
 class JusoInputScreen extends ConsumerStatefulWidget {
@@ -15,7 +16,8 @@ class JusoInputScreen extends ConsumerStatefulWidget {
   final String? userNickName;
   final bool fromMyPage;
 
-  const JusoInputScreen({super.key, this.type, this.index, this.userNickName, required this.fromMyPage});
+  const JusoInputScreen(
+      {super.key, this.type, this.index, this.userNickName, required this.fromMyPage});
 
   @override
   JusoInputState createState() => JusoInputState();
@@ -37,8 +39,8 @@ class JusoInputState extends ConsumerState<JusoInputScreen> {
       ref.read(myPageProvider.notifier).initSearchHistory();
     });
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent && !isLoading) {
+      if (scrollController.position.pixels == scrollController.position.maxScrollExtent &&
+          !isLoading) {
         loadMoreJuso();
       }
     });
@@ -58,17 +60,12 @@ class JusoInputState extends ConsumerState<JusoInputScreen> {
         isLoading = true;
         currentPage++;
       });
-      if(widget.fromMyPage) {
-        await ref.read(myPageProvider.notifier).getJusoList(
-            jusoController.text,
-            currentPage,
-            true);
+      if (widget.fromMyPage) {
+        await ref.read(myPageProvider.notifier).getJusoList(jusoController.text, currentPage, true);
       } else {
-        await ref.read(onboardingStateNotifierProvider.notifier).getJusoList(
-            jusoController.text,
-            currentPage,
-            true
-        );
+        await ref
+            .read(onboardingStateNotifierProvider.notifier)
+            .getJusoList(jusoController.text, currentPage, true);
       }
       setState(() {
         isLoading = false;
@@ -106,11 +103,15 @@ class JusoInputState extends ConsumerState<JusoInputScreen> {
                   (state.isError || (focusNode.hasFocus && resultAddress.inputJusoList.isEmpty)))
                 searchErrorWidget(),
               if (widget.fromMyPage &&
-                  (myPagestate.isError || (focusNode.hasFocus && myPageAddress.inputJusoList.isEmpty)))
+                  (myPagestate.isError ||
+                      (focusNode.hasFocus && myPageAddress.inputJusoList.isEmpty)))
                 searchErrorWidget(),
-
-              if ((!widget.fromMyPage && !state.isError && resultAddress.inputJusoList.isNotEmpty) ||
-                  (widget.fromMyPage && !myPagestate.isError && myPageAddress.inputJusoList.isNotEmpty))
+              if ((!widget.fromMyPage &&
+                      !state.isError &&
+                      resultAddress.inputJusoList.isNotEmpty) ||
+                  (widget.fromMyPage &&
+                      !myPagestate.isError &&
+                      myPageAddress.inputJusoList.isNotEmpty))
                 Expanded(
                   child: ListView.builder(
                     controller: scrollController,
@@ -127,8 +128,7 @@ class JusoInputState extends ConsumerState<JusoInputScreen> {
                       bool isTapped = selected.contains(index);
 
                       return ListTile(
-                        tileColor:
-                        isTapped ? DaepiroColorStyle.g_50 : DaepiroColorStyle.white,
+                        tileColor: isTapped ? DaepiroColorStyle.g_50 : DaepiroColorStyle.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                           side: BorderSide(color: DaepiroColorStyle.white),
@@ -150,7 +150,9 @@ class JusoInputState extends ConsumerState<JusoInputScreen> {
                             } else if (widget.index == '1') {
                               ref.read(onboardingStateNotifierProvider.notifier).addFirstJuso(juso);
                             } else {
-                              ref.read(onboardingStateNotifierProvider.notifier).addSecondJuso(juso);
+                              ref
+                                  .read(onboardingStateNotifierProvider.notifier)
+                                  .addSecondJuso(juso);
                             }
                             ref.read(onboardingStateNotifierProvider.notifier).initSearchHistory();
                           } else {
@@ -177,22 +179,24 @@ class JusoInputState extends ConsumerState<JusoInputScreen> {
     );
   }
 
-
   Widget headerWidget(String userNickName) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         IconButton(
-            visualDensity: VisualDensity.compact,
-            onPressed: () {
-              GoRouter.of(context).pop();
-            },
-            icon: SvgPicture.asset(
-              width: 24,
-                height: 24,
-                'assets/icons/icon_arrow_left.svg',
-                colorFilter: ColorFilter.mode(
-                    DaepiroColorStyle.g_900, BlendMode.srcIn))),
+          visualDensity: VisualDensity.compact,
+          onPressed: () {
+            GoRouter.of(context).pop();
+          },
+          icon: Resource.images.iconArrowLeft.svg(
+            width: 24,
+            height: 24,
+            colorFilter: const ColorFilter.mode(
+              DaepiroColorStyle.g_900,
+              BlendMode.srcIn,
+            ),
+          ),
+        ),
         SizedBox(height: 16),
         Wrap(
           spacing: 8,
@@ -201,14 +205,12 @@ class JusoInputState extends ConsumerState<JusoInputScreen> {
           children: [
             Text(
               '${userNickName}님의 ',
-              style: DaepiroTextStyle.h5.copyWith(
-                  color: DaepiroColorStyle.g_900),
+              style: DaepiroTextStyle.h5.copyWith(color: DaepiroColorStyle.g_900),
             ),
             typeChipWidget(),
             Text(
               AppStrings.jusoInput_Message_guide,
-              style: DaepiroTextStyle.h5.copyWith(
-                  color: DaepiroColorStyle.g_900),
+              style: DaepiroTextStyle.h5.copyWith(color: DaepiroColorStyle.g_900),
             )
           ],
         ),
@@ -219,23 +221,20 @@ class JusoInputState extends ConsumerState<JusoInputScreen> {
   Widget searchErrorWidget() {
     return Expanded(
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                AppStrings.jusoInput_ErrorMessage_InvalidAddress,
-                style: DaepiroTextStyle.body_1_b.copyWith(
-                    color: DaepiroColorStyle.g_600),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                  AppStrings.jusoInput_ErrorMessage_RetrySearch,
-                  style: DaepiroTextStyle.body_2_m.copyWith(
-                      color: DaepiroColorStyle.g_600)),
-            ],
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            AppStrings.jusoInput_ErrorMessage_InvalidAddress,
+            style: DaepiroTextStyle.body_1_b.copyWith(color: DaepiroColorStyle.g_600),
           ),
-        ));
+          const SizedBox(height: 4),
+          Text(AppStrings.jusoInput_ErrorMessage_RetrySearch,
+              style: DaepiroTextStyle.body_2_m.copyWith(color: DaepiroColorStyle.g_600)),
+        ],
+      ),
+    ));
   }
 
   Widget typeChipWidget() {
@@ -248,25 +247,23 @@ class JusoInputState extends ConsumerState<JusoInputScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(
-                width: 16,
-                  height: 16,
-                  widget.type == '집'
-                      ? 'assets/icons/icon_home.svg'
-                      : 'assets/icons/icon_location_24.svg',
-                  colorFilter: ColorFilter.mode(
-                      DaepiroColorStyle.white, BlendMode.srcIn)
-              ),
+              widget.type == '집'
+                  ? Resource.images.iconHome.svg(
+                      width: 16,
+                      height: 16,
+                      colorFilter: ColorFilter.mode(DaepiroColorStyle.white, BlendMode.srcIn))
+                  : Resource.images.iconLocation24.svg(
+                      width: 16,
+                      height: 16,
+                      colorFilter: ColorFilter.mode(DaepiroColorStyle.white, BlendMode.srcIn)),
               SizedBox(width: 4),
               Text(
                 widget.type!,
-                style: DaepiroTextStyle.body_2_b.copyWith(
-                    color: DaepiroColorStyle.white),
+                style: DaepiroTextStyle.body_2_b.copyWith(color: DaepiroColorStyle.white),
               ),
             ],
           ),
-        )
-    );
+        ));
   }
 
   //주소 입력창
@@ -274,21 +271,18 @@ class JusoInputState extends ConsumerState<JusoInputScreen> {
     return Stack(
       children: [
         TextField(
-          onTapOutside: (event) =>
-              FocusManager.instance.primaryFocus?.unfocus(),
+          onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
           controller: controller,
           cursorColor: DaepiroColorStyle.g_900,
-          style: DaepiroTextStyle.body_1_m.copyWith(
-              color: DaepiroColorStyle.g_900,
-              decorationThickness: 0
-          ),
+          style: DaepiroTextStyle.body_1_m
+              .copyWith(color: DaepiroColorStyle.g_900, decorationThickness: 0),
           onChanged: (text) async {
-            if(widget.fromMyPage) {
-              await ref.read(myPageProvider.notifier)
-                  .getJusoList(controller.text, 0, false);
+            if (widget.fromMyPage) {
+              await ref.read(myPageProvider.notifier).getJusoList(controller.text, 0, false);
               setState(() {});
             } else {
-              await ref.read(onboardingStateNotifierProvider.notifier)
+              await ref
+                  .read(onboardingStateNotifierProvider.notifier)
                   .getJusoList(controller.text, 0, false);
               setState(() {});
             }
@@ -300,38 +294,27 @@ class JusoInputState extends ConsumerState<JusoInputScreen> {
             contentPadding: EdgeInsets.all(16),
             fillColor: DaepiroColorStyle.g_50,
             hintText: AppStrings.jusoInput_HintText_hintType,
-            hintStyle: DaepiroTextStyle.body_1_m.copyWith(
-                color: DaepiroColorStyle.g_200),
+            hintStyle: DaepiroTextStyle.body_1_m.copyWith(color: DaepiroColorStyle.g_200),
             suffixIcon: Padding(
                 padding: EdgeInsets.symmetric(vertical: 16),
-                child: controller.text.length > 0 ?
-                GestureDetector(
-                  onTap: controller.clear,
-                  child: SvgPicture.asset(
-                      'assets/icons/icon_close.svg',
-                      colorFilter: ColorFilter.mode(
-                          DaepiroColorStyle.g_400, BlendMode.srcIn)
-                  ),
-                ) :
-                SvgPicture.asset('assets/icons/icon_search.svg',
-                    colorFilter: ColorFilter.mode(
-                        DaepiroColorStyle.g_200, BlendMode.srcIn))
-            ),
+                child: controller.text.length > 0
+                    ? GestureDetector(
+                        onTap: controller.clear,
+                        child: SvgPicture.asset('assets/icons/icon_close.svg',
+                            colorFilter:
+                                ColorFilter.mode(DaepiroColorStyle.g_400, BlendMode.srcIn)),
+                      )
+                    : SvgPicture.asset('assets/icons/icon_search.svg',
+                        colorFilter: ColorFilter.mode(DaepiroColorStyle.g_200, BlendMode.srcIn))),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(4)),
-                borderSide: BorderSide(
-                    width: 1.5,
-                    color: DaepiroColorStyle.g_75
-                )
-            ),
+                borderSide: BorderSide(width: 1.5, color: DaepiroColorStyle.g_75)),
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(4)),
-                borderSide: BorderSide(width: 1, color: DaepiroColorStyle.g_50)
-            ),
+                borderSide: BorderSide(width: 1, color: DaepiroColorStyle.g_50)),
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(4)),
-                borderSide: BorderSide(width: 1, color: DaepiroColorStyle.g_50)
-            ),
+                borderSide: BorderSide(width: 1, color: DaepiroColorStyle.g_50)),
           ),
         ),
       ],

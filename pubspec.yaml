@@ -109,11 +109,13 @@ dev_dependencies:
   hive_generator: ^2.0.1
 
 flutter_gen:
-  output: lib/resource/
+  output: lib/resource/gen
+  line_length: 100
+
   integrations:
-  image: true
-  flutter_svg: true
-  lottie: true
+    image: true
+    flutter_svg: true
+    lottie: true
 
 
 flutter:
