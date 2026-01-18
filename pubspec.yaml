@@ -44,8 +44,9 @@ dependencies:
   expandable_page_view: ^1.0.17
   smooth_page_indicator: ^1.0.0+2
   #Firebase
-  firebase_core: ^3.8.0
-  firebase_messaging: ^15.1.5
+  firebase_core: 4.3.0
+  firebase_messaging: 16.1.0
+  firebase_analytics: 12.1.0
 
   #gps
   geolocator: ^9.0.1
