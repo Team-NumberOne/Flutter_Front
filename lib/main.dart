@@ -25,7 +25,6 @@ Future<void> main() async {
   await SettingFCM().initNotification();
   // FirebaseMessaging messaging = FirebaseMessaging.instance;
   // String? token = await messaging.getToken();
-  // print("FCM 토큰: $token");
   runApp(const ProviderScope(child: MyApp()));
 }
 
