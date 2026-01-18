@@ -37,7 +37,6 @@ class DaepiroLogger extends Logger {
     _crashlytics?.recordError(error, stackTrace, reason: message.toString());
   }
 
-  /// crashlitics를 위한 전용 함수
   void recordError(dynamic error, StackTrace stackTrace) {
     super.e(stackTrace.toString(), error: error, stackTrace: stackTrace);
     _crashlytics?.recordError(error, stackTrace);
@@ -50,7 +49,6 @@ extension FMLoggerExtForFirebase on DaepiroLogger {
     _analytics = analytics;
   }
 
-  /// Crashlytics를 통해 오류 발생시 내용을 기록한다.
   void recordError(dynamic error, StackTrace stackTrace) {
     _crashlytics?.recordError(error, stackTrace);
   }
@@ -64,16 +62,11 @@ extension FMLoggerExtForFirebase on DaepiroLogger {
     _crashlytics?.setCustomKey(key, value);
   }
 
-  /// [FirebaseAnalytics]
-  /// 이벤트를 기록한다.
-  /// 앱에서 정의한 [FirebaseAnalyticsEventType] 에 추가된 이벤트만 추가한다.
   void recordEvent(FirebaseAnalyticsEvent event) {
     _analytics?.logEvent(name: event.eventName, parameters: event.parameters);
   }
 
-  /// [FirebaseAnalytics]
-  /// 이벤트를 기록한다.
-  /// 앱에서 정의한 [FirebaseAnalyticsEventType] 에 추가된 이벤트만 추가한다.
+
   void recordScreenView(String screenName, {Map<String, Object>? parameters}) {
     _analytics?.logScreenView(screenName: screenName, parameters: parameters);
   }

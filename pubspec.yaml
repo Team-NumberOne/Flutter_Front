@@ -29,7 +29,7 @@ dependencies:
   retrofit_generator: ^8.1.2
   freezed: ^2.5.2
 
-  logger: ^2.5.0
+  logger: 2.6.2
   #api 응답 로그 띄우는 용도
   pretty_dio_logger: ^1.4.0
   lottie: ^3.1.2
