@@ -1,14 +1,14 @@
+import 'dart:ui';
 import 'package:audio_session/audio_session.dart';
+import 'package:daepiro/conf/app_manager.dart';
 import 'package:daepiro/presentation/const/string_helper.dart';
 import 'package:daepiro/route/router.dart';
-import 'package:daepiro/set_fcm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'cmm/theme/DaepiroTheme.dart';
 import 'data/model/local_db/behavior_tip/behavior_adapter.dart';
 import 'data/model/local_db/behavior_tip/tip_item_adapter.dart';
@@ -24,13 +24,8 @@ Future<void> main() async {
   //소셜 로그인 초기화
   KakaoSdk.init(nativeAppKey: nativeKakaoKey);
   await _naverInit();
+  AppManager.instance.init();
 
-  await Firebase.initializeApp();
-  await SettingFCM().initNotification();
-  // FirebaseMessaging messaging = FirebaseMessaging.instance;
-  // String? token = await messaging.getToken();
-  // print("FCM 토큰: $token");
-  // hive db 초기화
   await _hiveInit();
   runApp(const ProviderScope(child: MyApp()));
 }
