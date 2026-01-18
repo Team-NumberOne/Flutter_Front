@@ -146,7 +146,3 @@ class DaepiroTextStyle {
       height: 1.2
   );
 }
-
-final ThemeData _lightThemeData = ThemeData();
-
-final DaepiroTheme lightTheme = DaepiroTheme(themeData: _lightThemeData, textTheme: _lightTextTheme, colorTheme: );
