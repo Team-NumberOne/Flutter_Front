@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../../cmm/theme/DaepiroTheme.dart';
 import '../../../cmm/widget/button/secondary_filled_button.dart';
+import '../../../resource/message/AppResources.dart';
 import '../../../resource/message/AppStrings.dart';
 import '../../../resource/resource.dart';
 import '../controller/onboarding_view_model.dart';
@@ -93,7 +94,7 @@ class JusoInputState extends ConsumerState<JusoInputScreen> {
               jusoInputTextField(ref, jusoController, focusNode),
               SizedBox(height: 16),
               Text(
-                AppStrings.jusoInput_Message_SearchResult,
+                AppResources.jusoInput_Message_SearchResult,
                 style: DaepiroTextStyle.body_2_m.copyWith(
                   color: DaepiroColorStyle.g_400,
                 ),
@@ -209,7 +210,7 @@ class JusoInputState extends ConsumerState<JusoInputScreen> {
             ),
             typeChipWidget(),
             Text(
-              AppStrings.jusoInput_Message_guide,
+              AppResources.jusoInput_Message_guide,
               style: DaepiroTextStyle.h5.copyWith(color: DaepiroColorStyle.g_900),
             )
           ],
@@ -226,11 +227,11 @@ class JusoInputState extends ConsumerState<JusoInputScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            AppStrings.jusoInput_ErrorMessage_InvalidAddress,
+            AppResources.jusoInput_ErrorMessage_InvalidAddress,
             style: DaepiroTextStyle.body_1_b.copyWith(color: DaepiroColorStyle.g_600),
           ),
           const SizedBox(height: 4),
-          Text(AppStrings.jusoInput_ErrorMessage_RetrySearch,
+          Text(AppResources.jusoInput_ErrorMessage_RetrySearch,
               style: DaepiroTextStyle.body_2_m.copyWith(color: DaepiroColorStyle.g_600)),
         ],
       ),
@@ -293,7 +294,7 @@ class JusoInputState extends ConsumerState<JusoInputScreen> {
             isDense: true,
             contentPadding: EdgeInsets.all(16),
             fillColor: DaepiroColorStyle.g_50,
-            hintText: AppStrings.jusoInput_HintText_hintType,
+            hintText: AppResources.jusoInput_HintText_hintType,
             hintStyle: DaepiroTextStyle.body_1_m.copyWith(color: DaepiroColorStyle.g_200),
             suffixIcon: Padding(
                 padding: EdgeInsets.symmetric(vertical: 16),
