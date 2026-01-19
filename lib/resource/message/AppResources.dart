@@ -9,4 +9,8 @@ abstract class AppResources {
 
   /// 예외처리 리소스
   static const ApiException_Default = '대피로 관리자에게 문의하세요.';
+  static const ApiException_invalidAuthentication = '로그인 인증 정보가 올바르지 않습니다. 다시 시도해주세요.';
+  static const ApiException_networkTimeout =  '네트워크 연결이 실패';
+  static const ApiException_networkOff = '와이파이 확인';
+  static const ApiException_invalidServerInfo = '서버 오류가 발생했습니다. 넘버원 서버팀에 문의해주세요.';
 }

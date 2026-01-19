@@ -7,7 +7,6 @@ import 'package:go_router/go_router.dart';
 import '../../../cmm/theme/DaepiroTheme.dart';
 import '../../../cmm/widget/button/secondary_filled_button.dart';
 import '../../../resource/message/AppResources.dart';
-import '../../../resource/message/AppStrings.dart';
 import '../../../resource/resource.dart';
 import '../controller/onboarding_view_model.dart';
 
