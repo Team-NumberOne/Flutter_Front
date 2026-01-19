@@ -1,10 +1,12 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:daepiro/cmm/exception.dart';
 import 'package:dio/dio.dart';
 
 class RemoteDataSource {
   static const int successCode = 200;
 
-  static Future<T> apiCall<T>(Future<T> Function() task) async {
+  Future<T> apiCall<T>(Future<T> Function() task) async {
+    await _checkNetworkConnection();
     try {
       final response = await task();
       return response;
@@ -28,6 +30,13 @@ class RemoteDataSource {
         );
       }
       throw ApiException(code: -1, type: ApiExceptionType.commonException);
+    }
+  }
+
+  Future<void> _checkNetworkConnection() async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    if(connectivityResult.contains(ConnectivityResult.none)) {
+      throw ApiException(code: -1, type: ApiExceptionType.networkOff);
     }
   }
 
