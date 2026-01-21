@@ -16,15 +16,7 @@ import 'data/model/local_db/behavior_tip/tips_adapter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: ".env");
-  String nativeKakaoKey = dotenv.get('KAKAOKEY');
-
-  await StringHelper.initialize();
-
-  //소셜 로그인 초기화
-  KakaoSdk.init(nativeAppKey: nativeKakaoKey);
-  await _naverInit();
-  AppManager.instance.init();
+  await AppManager.instance.appInit();
 
   await _hiveInit();
   runApp(const ProviderScope(child: MyApp()));
@@ -38,16 +30,6 @@ Future<void> _hiveInit() async {
   Hive.registerAdapter(BehaviorAdapter());
 
   await Hive.openBox<String>('behaviorTipsBox');
-}
-
-Future<void> _naverInit() async {
-  await dotenv.load(fileName: ".env");
-  String naverMapKey = dotenv.get('NAVER_MAP_CLIENTID');
-  // await NaverMapSdk.instance.initialize(
-  //   clientId: naverMapKey,
-  //   onAuthFailed: (e) => print("네이버맵 인증 오류:$e")
-  // );
-  return;
 }
 
 class MyApp extends ConsumerStatefulWidget {

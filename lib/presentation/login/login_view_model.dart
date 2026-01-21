@@ -1,14 +1,19 @@
+import 'package:daepiro/cmm/exception.dart';
+import 'package:daepiro/conf/app_manager.dart';
 import 'package:daepiro/data/model/request/set_fcm_request.dart';
 import 'package:daepiro/data/model/request/social_login_request.dart';
 import 'package:daepiro/domain/usecase/login/set_fcm_token_usecase.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
+import 'package:flutter_naver_login/interface/types/naver_login_result.dart';
+import 'package:flutter_naver_login/interface/types/naver_login_status.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import '../../cmm/logger.dart';
 import '../../data/model/response/login/sociallogin_token_response.dart';
 import '../../domain/usecase/login/social_login_usecase.dart';
 import '../../domain/usecase/onboarding/user_adresses_usecase.dart';
@@ -22,6 +27,8 @@ final loginStateNotifierProvider =
 class LoginViewModel extends StateNotifier<LoginState> {
   final Ref ref;
   final FlutterSecureStorage storage = const FlutterSecureStorage();
+  final DaepiroLogger _logger = DaepiroLogger.instance;
+  final AppManager _appManager = AppManager.instance;
 
   List<Permission> permission = [
     Permission.location,
@@ -40,9 +47,17 @@ class LoginViewModel extends StateNotifier<LoginState> {
                   platform: platform,
                   tokenRequest: SocialLoginRequest(socialToken: token)))
           .future);
-      if(response.code != 1000) {
-        throw Exception("Invalid response code: ${response}");
-      } else {
+      // if(response.code != 1000) {
+      //   throw Exception("Invalid response code: ${response}");
+      // } else {
+      //   state = state.copyWith(
+      //       isLoading: false,
+      //       isCompletedOnboarding: response.data?.isCompletedOnboarding ?? false,
+      //       isLoginSuccess: true);
+      //   await storage.write(key: 'accessToken', value: response.data?.accessToken);
+      //   await storage.write(key: 'refreshToken', value: response.data?.refreshToken);
+      //   await storage.write(key: 'platform', value: platform);
+      // }
         state = state.copyWith(
             isLoading: false,
             isCompletedOnboarding: response.data?.isCompletedOnboarding ?? false,
@@ -50,9 +65,11 @@ class LoginViewModel extends StateNotifier<LoginState> {
         await storage.write(key: 'accessToken', value: response.data?.accessToken);
         await storage.write(key: 'refreshToken', value: response.data?.refreshToken);
         await storage.write(key: 'platform', value: platform);
-      }
+    } on ApiException catch(error) {
+      _logger.e(error.message, error: error);
+
     } catch (error) {
-      print('토큰 저장 오류: $error');
+      _logger.e(error.toString(), error: error);
       state = state.copyWith(isLoading: false);
     }
   }
@@ -64,6 +81,7 @@ class LoginViewModel extends StateNotifier<LoginState> {
             fcmToken: fcmToken
         ))
     ));
+    //_appManager.init(userId)
   }
 
   Future<void> storeUserAdresses() async {
@@ -114,11 +132,15 @@ class LoginViewModel extends StateNotifier<LoginState> {
 
   Future<void> naverLogin() async {
     try {
-      await FlutterNaverLogin.logIn();
-      final naverAccessToken = await FlutterNaverLogin.getCurrentAccessToken();
-      await fetchSocialToken('naver', naverAccessToken.accessToken);
+      _logger.recordScreenView('naver_login');
+      final NaverLoginResult res = await FlutterNaverLogin.logIn();
+      if(res.status == NaverLoginStatus.loggedIn && res.accessToken != null) {
+        await fetchSocialToken('naver', res.accessToken!.accessToken);
+      } else if(res.accessToken == null) {
+        _logger.e('네이버 로그인 실패 ${res.status.toString()}');
+      }
     } catch (error) {
-      print('네이버 로그인 에러: $error');
+      _logger.e('네이버 로그인 실패 sdk', error: error);
     }
     return;
   }
