@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../domain/repository/local/behavior_repository.dart';
 import 'action_tip_state.dart';
-import 'package:daepiro/data/model/local_db/adapter/behavior_adapter.dart' as hive;
+import 'package:daepiro/data/model/hive/adapter/behavior_adapter.dart' as hive;
 import 'package:daepiro/data/model/response/information/behavior_list_response.dart' as api;
 
 

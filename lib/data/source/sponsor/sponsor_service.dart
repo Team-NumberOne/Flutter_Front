@@ -7,7 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 
-import '../../model/response/report_request.dart';
+import '../../model/request/report_request.dart';
 part 'sponsor_service.g.dart';
 
 @RestApi()

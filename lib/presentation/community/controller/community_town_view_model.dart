@@ -19,8 +19,8 @@ import '../../../data/model/request/community_check_current_location_request.dar
 import '../../../data/model/request/community_comment_post_request.dart';
 import '../../../data/model/request/community_disaster_edit_request.dart';
 import '../../../data/model/response/community/community_dongnae_content_response.dart';
-import '../../../data/model/response/report_request.dart';
-import '../../../data/model/selected_image.dart';
+import '../../../data/model/request/report_request.dart';
+import '../../../data/model/response/selected_image.dart';
 import '../../../domain/usecase/community/community_article_report_usecase.dart';
 import '../../../domain/usecase/community/community_comment_write_usecase.dart';
 import '../../../domain/usecase/community/community_disaster_delete_usecase.dart';

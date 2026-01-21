@@ -5,7 +5,7 @@ import 'package:daepiro/data/model/response/sponsor/sponsor_list_response.dart';
 import 'package:daepiro/data/source/sponsor/sponsor_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/http/http_provider.dart';
-import '../../data/model/response/report_request.dart';
+import '../../data/model/request/report_request.dart';
 import '../../data/repositoryimpl/sponsor_repository_impl.dart';
 
 final sponsorRepositoryProvider = Provider<SponsorRepository>((ref) {

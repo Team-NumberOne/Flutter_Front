@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../data/model/response/community/community_dongnae_content_detail_response.dart';
 import '../../../data/model/response/community/community_dongnae_content_response.dart';
-import '../../../data/model/selected_image.dart';
+import '../../../data/model/response/selected_image.dart';
 
 part 'community_town_state.freezed.dart';
 

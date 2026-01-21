@@ -19,7 +19,7 @@ import '../../data/model/response/community/disaster_reply_delete_response.dart'
 import '../../data/model/response/community/disaster_reply_response.dart';
 import '../../data/model/response/community/disaster_response.dart';
 import '../../data/model/response/community/town_certificate_response.dart';
-import '../../data/model/response/report_request.dart';
+import '../../data/model/request/report_request.dart';
 import '../../data/repositoryimpl/community_repository_impl.dart';
 
 final communityRepositoryProvider = Provider<CommunityRepository>((ref) {

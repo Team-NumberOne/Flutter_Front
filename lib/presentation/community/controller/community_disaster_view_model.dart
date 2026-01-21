@@ -1,5 +1,5 @@
 import 'package:daepiro/data/model/request/community_comment_post_request.dart';
-import 'package:daepiro/data/model/response/report_request.dart';
+import 'package:daepiro/data/model/request/report_request.dart';
 import 'package:daepiro/domain/usecase/community/community_disaster_edit_usecase.dart';
 import 'package:daepiro/domain/usecase/community/community_disaster_reply_usecase.dart';
 import 'package:daepiro/domain/usecase/community/community_reply_like_usecase.dart';

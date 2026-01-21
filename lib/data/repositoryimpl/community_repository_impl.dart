@@ -2,7 +2,7 @@ import 'package:daepiro/data/model/request/community_check_current_location_requ
 import 'package:daepiro/data/model/request/community_comment_post_request.dart';
 import 'package:daepiro/data/model/request/community_disaster_edit_request.dart';
 import 'package:daepiro/data/model/response/community/community_writing_edit_response.dart';
-import 'package:daepiro/data/model/response/report_request.dart';
+import 'package:daepiro/data/model/request/report_request.dart';
 import 'package:daepiro/data/model/request/set_town_certificate_request.dart';
 import 'package:daepiro/data/model/response/basic_response.dart';
 import 'package:daepiro/data/model/response/community/community_article_write_response.dart';

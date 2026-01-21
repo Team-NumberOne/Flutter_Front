@@ -9,7 +9,7 @@ import '../../model/request/community_check_current_location_request.dart';
 import '../../model/request/community_disaster_edit_request.dart';
 import '../../model/response/community/community_check_location_response.dart';
 import '../../model/response/community/community_writing_edit_response.dart';
-import '../../model/response/report_request.dart';
+import '../../model/request/report_request.dart';
 import '../../model/request/set_town_certificate_request.dart';
 import '../../model/response/community/community_article_write_response.dart';
 import '../../model/response/community/community_comment_post_response.dart';

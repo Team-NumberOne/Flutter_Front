@@ -1,4 +1,4 @@
-import 'package:daepiro/data/model/response/report_request.dart';
+import 'package:daepiro/data/model/request/report_request.dart';
 import 'package:daepiro/domain/usecase/sponsor/delete_cheer_usecase.dart';
 import 'package:daepiro/domain/usecase/sponsor/get_cheer_comment_list_usecase.dart';
 import 'package:daepiro/domain/usecase/sponsor/get_sponsor_list_usecase.dart';

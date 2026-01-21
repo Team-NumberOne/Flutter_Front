@@ -13,7 +13,7 @@ import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 
 import '../../../../cmm/theme/DaepiroTheme.dart';
 import '../../../../data/model/Album.dart';
-import '../../../../data/model/selected_image.dart';
+import '../../../../data/model/response/selected_image.dart';
 
 final selectedImagesProvider =
     StateNotifierProvider<SelectedImagesNotifier, List<SelectedImage>>((ref) {

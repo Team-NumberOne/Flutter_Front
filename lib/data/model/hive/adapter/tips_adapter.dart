@@ -1,4 +1,4 @@
-import 'package:daepiro/data/model/local_db/adapter/tip_item_adapter.dart';
+import 'package:daepiro/data/model/hive/adapter/tip_item_adapter.dart';
 import 'package:hive/hive.dart';
 
 part 'tips_adapter.g.dart';
