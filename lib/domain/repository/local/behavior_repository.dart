@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import '../../../data/model/local_db/behavior_tip/behavior_adapter.dart';
+import '../../../data/model/local_db/adapter/behavior_adapter.dart';
 
 class BehaviorRepository {
   final box = Hive.box<Behavior>('behaviorBox');

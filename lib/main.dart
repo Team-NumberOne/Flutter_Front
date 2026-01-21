@@ -1,18 +1,15 @@
 import 'dart:ui';
 import 'package:audio_session/audio_session.dart';
 import 'package:daepiro/conf/app_manager.dart';
-import 'package:daepiro/presentation/const/string_helper.dart';
 import 'package:daepiro/route/router.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'cmm/theme/DaepiroTheme.dart';
-import 'data/model/local_db/behavior_tip/behavior_adapter.dart';
-import 'data/model/local_db/behavior_tip/tip_item_adapter.dart';
-import 'data/model/local_db/behavior_tip/tips_adapter.dart';
+import 'data/model/hive/adapter/behavior_adapter.dart';
+import 'data/model/hive/adapter/tip_item_adapter.dart';
+import 'data/model/hive/adapter/tips_adapter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,8 +25,6 @@ Future<void> _hiveInit() async {
   Hive.registerAdapter(TipItemAdapter());
   Hive.registerAdapter(TipsAdapter());
   Hive.registerAdapter(BehaviorAdapter());
-
-  await Hive.openBox<String>('behaviorTipsBox');
 }
 
 class MyApp extends ConsumerStatefulWidget {

@@ -1,9 +1,9 @@
 import 'package:daepiro/domain/usecase/information/get_behavior_list_usecase.dart';
 import 'package:daepiro/data/model/response/information/behavior_list_response.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../data/model/local_db/behavior_tip/behavior_adapter.dart' as hive;
-import '../../../data/model/local_db/behavior_tip/tip_item_adapter.dart';
-import '../../../data/model/local_db/behavior_tip/tips_adapter.dart' as hiveTips;
+import '../../../data/model/local_db/adapter/behavior_adapter.dart' as hive;
+import '../../../data/model/local_db/adapter/tip_item_adapter.dart';
+import '../../../data/model/local_db/adapter/tips_adapter.dart' as hiveTips;
 import '../../../domain/repository/local/behavior_repository.dart';
 import 'behavior_tips_state.dart';
 
