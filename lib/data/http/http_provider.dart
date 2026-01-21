@@ -71,7 +71,7 @@ final interceptorProvider = Provider.family<InterceptorsWrapper, Dio>((ref, dio)
           : null;
       //토큰 갱신 요청 실패시 재시도 하지 않음
       if (exception.requestOptions.path.contains('/v1/auth/refresh')) {
-        _logger.d('토큰 갱신 요청 실패시 재시도 하지 않음:: ');
+        _logger.d('토큰 갱신 요청 실패시 재시도 하지 않음');
         handler.next(exception);
         return;
       }
@@ -97,10 +97,6 @@ final interceptorProvider = Provider.family<InterceptorsWrapper, Dio>((ref, dio)
 
                 //원래 요청을 재시도
                 exception.requestOptions.headers['Authorization'] = 'Bearer $newAccessToken';
-                final opts = Options(method: exception.requestOptions.method, headers: {
-                  ...exception.requestOptions.headers,
-                  'Authorization': 'Bearer $newAccessToken',
-                });
                 final clonedResponse = await dio.fetch(
                   exception.requestOptions,
                 );
