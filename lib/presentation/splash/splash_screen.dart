@@ -1,4 +1,3 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:daepiro/presentation/onboarding/controller/onboarding_view_model.dart';
 import 'package:daepiro/route/router.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +30,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerPr
       Future.delayed(const Duration(seconds: 5), () async {
         bool isfirstlaunch = await _isFirstLaunch();
         if(isfirstlaunch) {
-          FlutterSecureStorage storage = FlutterSecureStorage();
+          FlutterSecureStorage storage = const FlutterSecureStorage();
           storage.deleteAll();
           await setFirstLauch();
           GoRouter.of(context).replace('/login');

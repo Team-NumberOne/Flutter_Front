@@ -43,7 +43,8 @@ class DaepiroLogger extends Logger {
   }
 }
 
-extension FMLoggerExtForFirebase on DaepiroLogger {
+extension LoggerExtForFirebase on DaepiroLogger {
+
   void updateFirebaseComponent({FirebaseCrashlytics? crashlytics, FirebaseAnalytics? analytics}) {
     _crashlytics = crashlytics;
     _analytics = analytics;

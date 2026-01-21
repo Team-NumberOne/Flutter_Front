@@ -1,3 +1,4 @@
+import 'package:daepiro/data/http/remote_data_source.dart';
 import 'package:daepiro/data/model/request/social_login_request.dart';
 import 'package:daepiro/data/model/response/basic_response.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,7 +10,11 @@ import '../../data/source/login/login_service.dart';
 
 final loginRepositoryProvider = Provider<LoginRepository>((ref) {
   final http = ref.watch(dioProvider);
-  return LoginRepositoryImpl(service: LoginService(http));
+  final remoteDataSource = ref.watch(remoteDataSourceProvider);
+  return LoginRepositoryImpl(
+    service: LoginService(http),
+    remoteDataSource: remoteDataSource,
+  );
 });
 
 abstract class LoginRepository {
@@ -18,5 +23,5 @@ abstract class LoginRepository {
       required SocialLoginRequest socialLoginRequest});
 
   Future<BasicResponse> setFCMToken(
-  {required SetFcmRequest setFcmRequest});
+      {required SetFcmRequest setFcmRequest});
 }

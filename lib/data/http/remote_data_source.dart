@@ -1,9 +1,14 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:daepiro/cmm/exception.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final remoteDataSourceProvider = Provider<RemoteDataSource>((ref) {
+  return RemoteDataSource();
+});
 
 class RemoteDataSource {
-  static const int successCode = 200;
+  static const int successCode = 1000;
 
   Future<T> apiCall<T>(Future<T> Function() task) async {
     await _checkNetworkConnection();
