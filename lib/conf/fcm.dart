@@ -4,15 +4,15 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 class SettingFCM {
   final _localNotifications = FlutterLocalNotificationsPlugin();
 
-  @pragma('vm:entry-point')
-  static Future<void> firebaseMessagingBackgroundHandler(
-      RemoteMessage message) async {
-    print('백그라운드 메시지 처리: ${message.notification?.title}');
-  }
+  // @pragma('vm:entry-point')
+  // static Future<void> firebaseMessagingBackgroundHandler(
+  //     RemoteMessage message) async {
+  //   print('백그라운드 메시지 처리: ${message.notification?.title}');
+  // }
 
   Future<void> initNotification() async {
     //백그라운드 메시지 핸들러 등록
-    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+    //FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
     //로컬 알림 초기화
     const androidSettings =
