@@ -5,6 +5,7 @@ import 'package:daepiro/presentation/community/controller/town_certificate_view_
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
@@ -13,6 +14,7 @@ import '../../../../cmm/theme/DaepiroTheme.dart';
 import '../../../../cmm/widget/button/primary_filled_button.dart';
 import '../../../../cmm/widget/button/secondary_filled_button.dart';
 import '../../state/town_certificate_state.dart';
+import 'package:video_player/video_player.dart';
 
 class TownCertificateScreen extends ConsumerStatefulWidget {
   const TownCertificateScreen({super.key});
@@ -26,19 +28,18 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
   String selectAddress = '';
   bool isFirstDialogAppear = false;
   bool isSecondDialogAppear = false;
-  // NMarker? currentMarker;
-  // late NaverMapController _mapController;
-  //late VideoPlayerController controller;
+  NMarker? currentMarker;
+  late NaverMapController _mapController;
+  late VideoPlayerController _controller;
 
   bool isvalue = true;
 
   @override
   void initState() {
     super.initState();
-    // controller = controller =
-    //     VideoPlayerController.asset('assets/videos/badge_video.mp4')
-    //       ..initialize()
-    //       ..setLooping(true);
+    _controller = VideoPlayerController.asset('assets/videos/badge_video.mp4')
+      ..initialize()
+      ..setLooping(true);
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -52,17 +53,17 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
     final state = ref.watch(townCertificateProvider);
 
     setState(() {
-      // currentMarker = NMarker(
-      //   id: 'daepiro',
-      //   icon: NOverlayImage.fromAssetImage('assets/icons/icon_location_58.png'),
-      //   position: NLatLng(state.latitude, state.longitude),
-      // );
-      // _mapController.addOverlay(currentMarker!);
+      currentMarker = NMarker(
+        id: 'daepiro',
+        icon: NOverlayImage.fromAssetImage('assets/icons/icon_location_58.png'),
+        position: NLatLng(state.latitude, state.longitude),
+      );
+      _mapController.addOverlay(currentMarker!);
     });
-    // _mapController.updateCamera(NCameraUpdate.scrollAndZoomTo(
-    //   target: NLatLng(state.latitude, state.longitude),
-    //   zoom: 15.0,
-    // ));
+    _mapController.updateCamera(NCameraUpdate.scrollAndZoomTo(
+      target: NLatLng(state.latitude, state.longitude),
+      zoom: 15.0,
+    ));
   }
 
   Future<void> _updateLocation() async {
@@ -73,21 +74,21 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
     await viewModel.getUserLocation();
     await viewModel.setCertificate(townState.townLongAddressList);
 
-    // SchedulerBinding.instance.addPostFrameCallback((_) {
-    //   _mapController.deleteOverlay(currentMarker!.info);
-    //
-    //   currentMarker = NMarker(
-    //     id: 'daepiro',
-    //     icon: NOverlayImage.fromAssetImage('assets/icons/icon_location_58.png'),
-    //     position: NLatLng(state.latitude, state.longitude),
-    //   );
-    //
-    //   _mapController.addOverlay(currentMarker!);
-    //   _mapController.updateCamera(NCameraUpdate.scrollAndZoomTo(
-    //     target: NLatLng(state.latitude, state.longitude),
-    //   ));
-    //   setState(() {});
-    // });
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _mapController.deleteOverlay(currentMarker!.info);
+
+      currentMarker = NMarker(
+        id: 'daepiro',
+        icon: NOverlayImage.fromAssetImage('assets/icons/icon_location_58.png'),
+        position: NLatLng(state.latitude, state.longitude),
+      );
+
+      _mapController.addOverlay(currentMarker!);
+      _mapController.updateCamera(NCameraUpdate.scrollAndZoomTo(
+        target: NLatLng(state.latitude, state.longitude),
+      ));
+      setState(() {});
+    });
   }
 
   @override
@@ -97,7 +98,9 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
     switch (appState) {
       case AppLifecycleState.resumed:
         await viewModel.getLocationPermissionStatus();
-        if (!state.isPermissionGrant && isSecondDialogAppear && isFirstDialogAppear) {
+        if (!state.isPermissionGrant &&
+            isSecondDialogAppear &&
+            isFirstDialogAppear) {
           GoRouter.of(context).pop();
           GoRouter.of(context).pop();
         }
@@ -110,7 +113,9 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
   @override
   void dispose() {
     super.dispose();
-    //controller.dispose();
+    _controller.dispose();
+    _mapController.deleteOverlay(currentMarker!.info);
+    _mapController.dispose();
     WidgetsBinding.instance.removeObserver(this);
   }
 
@@ -141,7 +146,7 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
 
     ref.listen<TownCertificateState>(townCertificateProvider, (previous, next) {
       if (next.isSuccessCertificate) {
-        //controller.play();
+        _controller.play();
       }
     });
 
@@ -172,7 +177,8 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
                                 addressWidget(state.selectAddress),
                                 Container(
                                     width: double.infinity,
-                                    height: state.isSuccessCertificate ? 317 : 411,
+                                    height:
+                                        state.isSuccessCertificate ? 317 : 411,
                                     child: Stack(
                                       children: [
                                         Positioned(
@@ -181,29 +187,31 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
                                           left: 0,
                                           child: Container(
                                             width: double.infinity,
-                                            height: state.isSuccessCertificate ? 317 : 411,
-                                            child: SizedBox.shrink()
-                                            // NaverMap(
-                                            //   options: NaverMapViewOptions(
-                                            //       initialCameraPosition:
-                                            //       NCameraPosition(
-                                            //           target: NLatLng(
-                                            //               state.latitude,
-                                            //               state.longitude),
-                                            //           zoom: 15.0),
-                                            //       indoorEnable: true,
-                                            //       logoClickEnable: false),
-                                            //   onMapReady: (controller) async {
-                                            //     _mapController = controller;
-                                            //   },
-                                            // ),
+                                            height: state.isSuccessCertificate
+                                                ? 317
+                                                : 411,
+                                            child: NaverMap(
+                                              options: NaverMapViewOptions(
+                                                  initialCameraPosition:
+                                                      NCameraPosition(
+                                                          target: NLatLng(
+                                                              state.latitude,
+                                                              state.longitude),
+                                                          zoom: 15.0),
+                                                  indoorEnable: true,
+                                                  logoClickEnable: false),
+                                              onMapReady: (controller) {
+                                                _mapController = controller;
+                                              },
+                                            ),
                                           ),
                                         ),
                                         Positioned(
                                           bottom: 12,
                                           right: 12,
                                           child: Visibility(
-                                              visible: !state.isSuccessCertificate,
+                                              visible:
+                                                  !state.isSuccessCertificate,
                                               child: GestureDetector(
                                                 onTap: () async {
                                                   await _updateLocation();
@@ -213,24 +221,33 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
                                                   height: 40,
                                                   decoration: BoxDecoration(
                                                       shape: BoxShape.circle,
-                                                      color: DaepiroColorStyle.white,
+                                                      color: DaepiroColorStyle
+                                                          .white,
                                                       boxShadow: [
                                                         BoxShadow(
                                                             color: Colors.black
-                                                                .withOpacity(0.12),
+                                                                .withOpacity(
+                                                                    0.12),
                                                             blurRadius: 4.0,
                                                             spreadRadius: 0.0,
-                                                            offset: const Offset(0, 0))
+                                                            offset:
+                                                                const Offset(
+                                                                    0, 0))
                                                       ]),
                                                   child: Padding(
-                                                    padding: const EdgeInsets.all(8.0),
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
                                                     child: SvgPicture.asset(
                                                         width: 24,
                                                         height: 24,
                                                         'assets/icons/icon_reset.svg',
-                                                        colorFilter: ColorFilter.mode(
-                                                            DaepiroColorStyle.g_900,
-                                                            BlendMode.srcIn)),
+                                                        colorFilter:
+                                                            ColorFilter.mode(
+                                                                DaepiroColorStyle
+                                                                    .g_900,
+                                                                BlendMode
+                                                                    .srcIn)),
                                                   ),
                                                 ),
                                               )),
@@ -251,11 +268,14 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
                                                     width: 250,
                                                     child: Text(
                                                       '현 위치가 다른 경우 페이지를 새로고침해주세요.',
-                                                      textAlign: TextAlign.center,
-                                                      style: DaepiroTextStyle.caption
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: DaepiroTextStyle
+                                                          .caption
                                                           .copyWith(
-                                                          color: DaepiroColorStyle
-                                                              .g_50),
+                                                              color:
+                                                                  DaepiroColorStyle
+                                                                      .g_50),
                                                     ),
                                                   )
                                                 ],
@@ -270,15 +290,16 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
                                     padding: const EdgeInsets.only(top: 8),
                                     child: Text(
                                       '현재 \‘${state.selectAddress}\' 동네 생활에 있어요.\n현 위치가 동네와 다르면 위치를 노출할 수 없어요.',
-                                      style: DaepiroTextStyle.body_2_m
-                                          .copyWith(color: DaepiroColorStyle.g_500),
+                                      style: DaepiroTextStyle.body_2_m.copyWith(
+                                          color: DaepiroColorStyle.g_500),
                                     ),
                                   ),
                                 if (state.isSuccessCertificate)
                                   Padding(
                                     padding: const EdgeInsets.only(top: 20.0),
                                     child: Center(
-                                        child: successCertificate(selectAddress)),
+                                        child:
+                                            successCertificate(selectAddress)),
                                   ),
                               ],
                             ),
@@ -294,7 +315,8 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
                                           backgroundColor:
                                               DaepiroColorStyle.g_700,
                                           pressedColor: DaepiroColorStyle.g_600,
-                                          onPressed: () => GoRouter.of(context).go('/home'),
+                                          onPressed: () =>
+                                              GoRouter.of(context).go('/home'),
                                           borderRadius: 8,
                                           child: Text(
                                             '홈으로',
@@ -317,7 +339,8 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
                                           backgroundColor:
                                               DaepiroColorStyle.g_200,
                                           pressedColor: DaepiroColorStyle.g_200,
-                                          onPressed: () => GoRouter.of(context).pop(),
+                                          onPressed: () =>
+                                              GoRouter.of(context).pop(),
                                           borderRadius: 8,
                                           child: Text(
                                             '홈으로',
@@ -471,8 +494,7 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
         builder: (BuildContext context) {
           return AlertDialog(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12)
-              ),
+                  borderRadius: BorderRadius.circular(12)),
               backgroundColor: DaepiroColorStyle.white,
               titlePadding: EdgeInsets.fromLTRB(20, 24, 20, 4),
               title: Column(
@@ -638,9 +660,10 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
             GoRouter.of(context).pop();
             var requestStatus = await Permission.location.request();
             var status = await Permission.location.status;
-            if(requestStatus.isPermanentlyDenied || status.isPermanentlyDenied) {
+            if (requestStatus.isPermanentlyDenied ||
+                status.isPermanentlyDenied) {
               openAppSettings();
-            } else if(status.isRestricted) {
+            } else if (status.isRestricted) {
               openAppSettings();
             }
           },
@@ -701,9 +724,8 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12)
-            ),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             backgroundColor: DaepiroColorStyle.white,
             titlePadding: EdgeInsets.fromLTRB(20, 24, 20, 4),
             title: Column(
@@ -735,47 +757,42 @@ class TownCertificateScreenState extends ConsumerState<TownCertificateScreen>
   }
 
   Widget successCertificate(String selectAddress) {
-    return SizedBox.shrink();
-    // return LayoutBuilder(
-    //   builder: (context, constraints) {
-    //     return Column(
-    //       mainAxisSize: MainAxisSize.min,
-    //       crossAxisAlignment: CrossAxisAlignment.center,
-    //       children: [
-    //         SizedBox(
-    //           width: 80,
-    //           height: 80,
-    //           child: FutureBuilder(
-    //             future: controller.initialize(),
-    //             builder: (context, snapshot) {
-    //               if (snapshot.connectionState == ConnectionState.done) {
-    //                 controller.setLooping(true);
-    //                 controller.play();
-    //                 return VideoPlayer(controller);
-    //               } else {
-    //                 return Center(child: CircularProgressIndicator());
-    //               }
-    //             },
-    //           ),
-    //         ),
-    //         SizedBox(height: 12),
-    //         Text(
-    //           '\'${selectAddress}\' 주민 뱃지를 얻었어요!',
-    //           style: DaepiroTextStyle.body_1_b.copyWith(color: DaepiroColorStyle.g_700),
-    //         ),
-    //         Text(
-    //           '동네생활에서 주민들과 함께 안전한 동네를 만들어요.',
-    //           style: DaepiroTextStyle.body_2_m.copyWith(color: DaepiroColorStyle.g_500),
-    //         ),
-    //       ],
-    //     );
-    //   },
-    // );
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 80,
+              height: 80,
+              child: FutureBuilder(
+                future: _controller.initialize(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    _controller.setLooping(true);
+                    _controller.play();
+                    return VideoPlayer(_controller);
+                  } else {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
+            ),
+            SizedBox(height: 12),
+            Text(
+              '\'${selectAddress}\' 주민 뱃지를 얻었어요!',
+              style: DaepiroTextStyle.body_1_b.copyWith(color: DaepiroColorStyle.g_700),
+            ),
+            Text(
+              '동네생활에서 주민들과 함께 안전한 동네를 만들어요.',
+              style: DaepiroTextStyle.body_2_m.copyWith(color: DaepiroColorStyle.g_500),
+            ),
+          ],
+        );
+      },
+    );
   }
-
-
-
-
 }
 
 class CustomBalloon extends CustomPainter {
