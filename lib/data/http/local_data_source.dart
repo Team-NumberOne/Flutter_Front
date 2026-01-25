@@ -14,4 +14,8 @@ class LocalDataSource {
   Future<Box<String>> _openBehaviorTipBox() async {
     return await Hive.openBox<String>('behaviorTipsBox');
   }
+
+  Future<Box<String>> _openAppPolicyBix() async {
+    return await Hive.openBox<String>('policy');
+  }
 }

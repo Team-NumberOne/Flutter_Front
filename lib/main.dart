@@ -4,27 +4,14 @@ import 'package:daepiro/conf/app_manager.dart';
 import 'package:daepiro/route/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'cmm/theme/DaepiroTheme.dart';
-import 'data/model/hive/adapter/behavior_adapter.dart';
-import 'data/model/hive/adapter/tip_item_adapter.dart';
-import 'data/model/hive/adapter/tips_adapter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppManager.instance.appInit();
+  //await AppManager.instance.init('victoria'); /// 임시로 위치
 
-  await _hiveInit();
   runApp(const ProviderScope(child: MyApp()));
-}
-
-Future<void> _hiveInit() async {
-  await Hive.initFlutter();
-
-  Hive.registerAdapter(TipItemAdapter());
-  Hive.registerAdapter(TipsAdapter());
-  Hive.registerAdapter(BehaviorAdapter());
 }
 
 class MyApp extends ConsumerStatefulWidget {

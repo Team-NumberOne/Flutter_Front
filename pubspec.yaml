@@ -73,7 +73,7 @@ dependencies:
   device_info_plus: 11.3.0
 
   #naver map
-  #flutter_naver_map: 1.4.0
+  flutter_naver_map: 1.4.4
 
   # 공유하기
   share_plus: ^10.1.4

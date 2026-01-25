@@ -12,7 +12,7 @@ import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 
 import '../../../../cmm/theme/DaepiroTheme.dart';
-import '../../../../data/model/Album.dart';
+import '../../../../data/model/response/album.dart';
 import '../../../../data/model/response/selected_image.dart';
 
 final selectedImagesProvider =
