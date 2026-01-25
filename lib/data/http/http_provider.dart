@@ -11,9 +11,14 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../model/response/login/refresh_token_response.dart';
 
 final dioProvider = Provider<Dio>((ref) {
-  final options = BaseOptions(baseUrl: dotenv.get('BASE_URL'), headers: {
-    'Content-Type': 'application/json',
-  });
+  final options = BaseOptions(
+    baseUrl: dotenv.get('BASE_URL'),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    connectTimeout: const Duration(seconds: 5),
+    receiveTimeout: const Duration(seconds: 3),
+  );
 
   final Dio dio = Dio(options);
   dio.interceptors.add(PrettyDioLogger(
@@ -29,9 +34,14 @@ final dioProvider = Provider<Dio>((ref) {
 });
 
 final communityWriteDioProvider = Provider<Dio>((ref) {
-  final options = BaseOptions(baseUrl: dotenv.get('BASE_URL'), headers: {
-    'Content-Type': 'multipart/form-data',
-  });
+  final options = BaseOptions(
+    baseUrl: dotenv.get('BASE_URL'),
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    connectTimeout: const Duration(seconds: 5),
+    receiveTimeout: const Duration(seconds: 3),
+  );
 
   final Dio dio = Dio(options);
   dio.interceptors.add(PrettyDioLogger(
@@ -46,7 +56,8 @@ final communityWriteDioProvider = Provider<Dio>((ref) {
   return dio;
 });
 
-final interceptorProvider = Provider.family<InterceptorsWrapper, Dio>((ref, dio) {
+final interceptorProvider =
+    Provider.family<InterceptorsWrapper, Dio>((ref, dio) {
   final DaepiroLogger _logger = DaepiroLogger.instance;
   const storage = storge.FlutterSecureStorage();
 
@@ -85,7 +96,8 @@ final interceptorProvider = Provider.family<InterceptorsWrapper, Dio>((ref, dio)
               '${dotenv.get('BASE_URL')}/v1/auth/refresh',
               data: RefreshTokenRequest(refreshToken: refreshToken),
             );
-            final refreshTokenResponse = RefreshTokenResponse.fromJson(response.data);
+            final refreshTokenResponse =
+                RefreshTokenResponse.fromJson(response.data);
             // token refresh 성공
             if (refreshTokenResponse.code == 1000) {
               final newAccessToken = refreshTokenResponse.data?.accessToken;
@@ -93,10 +105,12 @@ final interceptorProvider = Provider.family<InterceptorsWrapper, Dio>((ref, dio)
 
               if (newAccessToken != null && newRefreshToken != null) {
                 await storage.write(key: 'accessToken', value: newAccessToken);
-                await storage.write(key: 'refreshToken', value: newRefreshToken);
+                await storage.write(
+                    key: 'refreshToken', value: newRefreshToken);
 
                 //원래 요청을 재시도
-                exception.requestOptions.headers['Authorization'] = 'Bearer $newAccessToken';
+                exception.requestOptions.headers['Authorization'] =
+                    'Bearer $newAccessToken';
                 final clonedResponse = await dio.fetch(
                   exception.requestOptions,
                 );
