@@ -47,17 +47,6 @@ class LoginViewModel extends StateNotifier<LoginState> {
                   platform: platform,
                   tokenRequest: SocialLoginRequest(socialToken: token)))
           .future);
-      // if(response.code != 1000) {
-      //   throw Exception("Invalid response code: ${response}");
-      // } else {
-      //   state = state.copyWith(
-      //       isLoading: false,
-      //       isCompletedOnboarding: response.data?.isCompletedOnboarding ?? false,
-      //       isLoginSuccess: true);
-      //   await storage.write(key: 'accessToken', value: response.data?.accessToken);
-      //   await storage.write(key: 'refreshToken', value: response.data?.refreshToken);
-      //   await storage.write(key: 'platform', value: platform);
-      // }
         state = state.copyWith(
             isLoading: false,
             isCompletedOnboarding: response.data?.isCompletedOnboarding ?? false,
@@ -67,7 +56,7 @@ class LoginViewModel extends StateNotifier<LoginState> {
         await storage.write(key: 'platform', value: platform);
     } on ApiException catch(error) {
       _logger.e(error.message, error: error);
-
+      state = state.copyWith(isLoading: false);
     } catch (error) {
       _logger.e(error.toString(), error: error);
       state = state.copyWith(isLoading: false);
@@ -81,7 +70,12 @@ class LoginViewModel extends StateNotifier<LoginState> {
             fcmToken: fcmToken
         ))
     ));
-    //_appManager.init(userId)
+    _logger.recordScreenView(
+      'login_view',
+        parameters: {
+        'loginType': 'kakao'
+      }
+    );
   }
 
   Future<void> storeUserAdresses() async {
@@ -105,18 +99,18 @@ class LoginViewModel extends StateNotifier<LoginState> {
     if (await isKakaoTalkInstalled()) {
       try {
         OAuthToken token = await UserApi.instance.loginWithKakaoTalk();
-        print('카카오톡으로 로그인 성공');
         await fetchSocialToken('kakao', token.accessToken);
       } catch (error) {
-        print('카카오톡으로 로그인 실패: $error');
+        _logger.e(error.toString(), error: error);
         if (error is PlatformException && error.code == 'CANCELED') {
+          // 사용자가 취소
           return;
         }
         try {
           OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
           await fetchSocialToken('kakao', token.accessToken);
         } catch (error) {
-          print('카카오계정으로 로그인 실패: $error');
+          _logger.e(error.toString(), error: error);
         }
       }
     } else {
@@ -124,7 +118,7 @@ class LoginViewModel extends StateNotifier<LoginState> {
         OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
         await fetchSocialToken('kakao', token.accessToken);
       } catch (error) {
-        print('카카오계정으로 로그인 실패: $error');
+        _logger.e(error.toString(), error: error);
       }
     }
     return;
